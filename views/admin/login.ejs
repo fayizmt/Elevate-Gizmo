@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElevateGizmo Admin Login</title>
+    <link rel="stylesheet" href="/admin/css/login.css">
+        
+</head>
+<body>
+    <div class="container">
+        <h4>Admin Login</h4>
+        <form class="form" method="post" action="/admin/login" onsubmit="return validateLoginForm()">
+            <div class="input-field">
+                <span class="input-icon"><i class="fas fa-envelope"></i></span>
+                <input name="email" id="email" required type="email" placeholder="Enter Your Email">
+            </div>
+            <div class="input-field">
+                <span class="input-icon"><i class="fas fa-lock"></i></span>
+                <input name="password" id="password" required type="password" placeholder="Enter Your Password">
+            </div>
+            <label class="error" id="loginError"></label><br>
+            <a href="/admin/forget" class="forgot-password">Forgot Password?</a>
+            <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <script>
+        document.getElementById("email").addEventListener("blur", function() {
+            validateField("email", /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "loginError", "Invalid email or password");
+        });
+
+        document.getElementById("password").addEventListener("blur", function() {
+            validateField("password", /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, "loginError","Invalid email or password" );
+        });
+
+        function validateField(fieldId, regex, errorSpanId, errorMessage) {
+            var fieldValue = document.getElementById(fieldId).value;
+            var errorSpan = document.getElementById(errorSpanId);
+            if (!regex.test(fieldValue)) {
+                errorSpan.innerHTML = errorMessage;
+            } else {
+                errorSpan.innerHTML = "";
+            }
+        }
+
+        function validateLoginForm() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            if (!email || !password) {
+                document.getElementById("loginError").innerHTML = "Please fill out both email and password fields.";
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission
+        }
+    </script>
+</body>
+</html>

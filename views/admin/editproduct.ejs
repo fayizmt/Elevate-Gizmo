@@ -1,0 +1,276 @@
+<%-include ('../layouts/adminHeader.ejs') %>
+        <div class="screen-overlay"></div>
+        
+            <%-include ('../layouts/adminSideBar.ejs') %>
+        </aside>
+        <main class="main-wrap">
+            <header class="main-header navbar">
+                <div class="col-search">
+                    <form class="searchform">
+                        <div class="input-group">
+                            <input list="search_terms" type="text" class="form-control" placeholder="Search term" />
+                            <button class="btn btn-light bg" type="button"><i class="material-icons md-search"></i></button>
+                        </div>
+                        <datalist id="search_terms">
+                            <option value="Products"></option>
+                            <option value="New orders"></option>
+                            <option value="Apple iphone"></option>
+                            <option value="Ahmed Hassan"></option>
+                        </datalist>
+                    </form>
+                </div>
+                <div class="col-nav">
+                    <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"><i class="material-icons md-apps"></i></button>
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link btn-icon" href="#">
+                                <i class="material-icons md-notifications animation-shake"></i>
+                                <span class="badge rounded-pill">3</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i> </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
+                        </li>
+                        <li class="dropdown nav-item">
+                            <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false"><i class="material-icons md-public"></i></a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
+                                <a class="dropdown-item text-brand" href="#"><img src="/admin/imgs/theme/flag-us.png" alt="English" />English</a>
+                                <a class="dropdown-item" href="#"><img src="/admin/imgs/theme/flag-fr.png" alt="Français" />Français</a>
+                                <a class="dropdown-item" href="#"><img src="/admin/imgs/theme/flag-jp.png" alt="Français" />日本語</a>
+                                <a class="dropdown-item" href="#"><img src="/admin/imgs/theme/flag-cn.png" alt="Français" />中国人</a>
+                            </div>
+                        </li>
+                        <li class="dropdown nav-item">
+                            <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="/public/assets/imgs/people/avatar-2.png" alt="User" /></a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                                <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
+                                <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
+                                <a class="dropdown-item" href="#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
+                                <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
+                                <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="#"><i class="material-icons md-exit_to_app"></i>Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+
+   
+            <section class="content-main py-4">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-md-9">
+                            <div class="content-header">
+                                <h2 class="content-title">Edit Product</h2>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form class="forms-sample" action="" method="post" enctype="multipart/form-data" id="productForm">
+                                        <div class="form-group">
+                                            <label class="form-label">Product Name</label>
+                                            <input type="text" class="form-control" name="productName" value="<%= product.productName %>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Description</label>
+                                            <input type="text" class="form-control" name="description" value="<%= product.description %>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Category</label>
+                                            <select class="form-control" id="category" name="category" required>
+                                                <% category.forEach(category => { %>
+                                                    <% if (category._id.toString() === product.category.toString()) { %>
+                                                        <option value="<%= category._id %>" selected><%= category.category %></option>
+                                                    <% } else { %>
+                                                        <option value="<%= category._id %>"><%= category.category %></option>
+                                                    <% } %>
+                                                <% }); %>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Color</label>
+                                            <input type="text" class="form-control" name="color" value="<%= product.color %>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Price</label>
+                                            <input type="number" class="form-control" name="price" id="price" value="<%= product.price %>" required>
+                                            <div id="priceError" class="error-message text-danger"></div>
+                                        </div> 
+                                        <div class="form-group">
+                                            <label class="form-label">Quantity</label>
+                                            <input type="number" class="form-control" name="quantity" id="quantity" value="<%= product.quantity %>" required>
+                                            <div id="quantityError" class="error-message text-danger"></div>
+                                        </div>
+                                        <!-- <div class="form-group">
+                                            <label class="form-label">Status</label>
+                                            <br>
+                                            <label for="active">Active</label>
+                                            <input type="radio" id="active" name="is_block" value="1" <% if(product.is_block == 1){ %> checked <% } %>>
+                                            <label for="block">Block</label>
+                                            <input type="radio" id="block" name="is_block" value="0" <% if(product.is_block == 0){ %> checked <% } %>>
+                                        </div> -->
+                                        <input type="hidden" name="id" value="<%= product._id %>">
+                                        <div style="margin-top: 1.2rem;">
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                            <a href="/admin/product" type="submit" class="btn btn-primary">Back</a>
+                                        </div>
+                                    </form>
+                                    <div class="col-12 grid-margin stretch-card">
+                                        <div class="card">
+                                          <div class="card-body">
+                            
+                                              <h4 class="card-title">Edit Product images  </h4>
+                            
+                            <div class="card">
+                                <% if (product.images) { %>
+                                    <div class="image-preview-container">
+                                      <% for (let i = 0; i < product.images.length; i++) { %>
+                                        <div class="image-preview" id="container<%= i %>">
+                                          <img src="/images/products/<%= product.images[i] %>" alt="Old Image">
+                                          <div class="button-container">
+                                            <button class="btn btn-danger remove-button m-2" data-productid="<%= product._id %>" data-imageindex="<%= i %>">Remove</button>
+                                            
+                                          </div>
+                                        </div>
+                                      <% } %>
+                                      <% if(product.images.length<10) { %>
+                                      <div class="image-preview" id="containerAdd">
+                                          <img src="https://cdn-icons-png.flaticon.com/512/4211/4211547.png" alt="Old Image">
+                                      <div class="button-container">
+                                    <button class="btn btn-danger add-button m-2" data-productid="<%= product._id %>" id="addPicture">Add Pictures</button>
+                                    <input type="file" name="images" class="d-none image-input" accept="image/*" id="imageInput" multiple>
+                                  </div>
+                                        </div>
+                                        <%}%>
+                                    </div>
+                                    <% } %>
+                             
+                            
+                            
+                            
+                            
+                            
+                                            </div>
+                                            </div>
+                                            </div>
+                                       </div>
+                                       
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+    <!-- remove the product -->
+    <script>
+  document.addEventListener('DOMContentLoaded', function () {
+  const removeButtons = document.querySelectorAll('.remove-button');
+
+  removeButtons.forEach(button => {
+    button.addEventListener('click', function (event) {
+      // Stop the event from propagating up to parent elements
+      event.stopPropagation();
+
+      const productId = this.getAttribute('data-productid');
+      const imageIndex = this.getAttribute('data-imageindex');
+
+      // Fetch code
+      fetch(`/admin/removeImage?productId=${productId}&imageIndex=${imageIndex}`, {
+        method: 'DELETE',
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Use SweetAlert for the alert
+        Swal.fire({
+          title: 'Success!',
+          text: data.message,
+          icon: 'success',
+        });
+
+        // Remove the corresponding image-preview div by ID
+        const imagePreviewDivId = `container${imageIndex}`;
+        const imagePreviewDiv = document.getElementById(imagePreviewDivId);
+        if (imagePreviewDiv) {
+          imagePreviewDiv.remove();
+        }
+      })
+      .catch(error => {
+        console.error('Error during fetch:', error);
+        // Handle errors here if necessary
+      });
+    });
+  });
+});
+
+</script> 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+     const addPicturesButton = document.getElementById('addPicture');
+     const imageInput = document.getElementById('imageInput');
+   
+     addPicturesButton.addEventListener('click', function () {
+       const productId = addPicturesButton.getAttribute('data-productid');
+   
+       // Clear any previously selected files
+       imageInput.value = null;
+   
+       // Trigger the file input click event
+       imageInput.click();
+     });
+   
+     // Listen for changes in the file input
+     imageInput.addEventListener('change', function () {
+       const productId = addPicturesButton.getAttribute('data-productid');
+       const formData = new FormData();
+   
+       formData.append('images', imageInput.files[0]); // Assuming you want to upload the first selected file
+   
+       fetch(`/admin/uploadImage/${productId}`, {
+         method: 'PATCH',
+         body: formData,
+       })
+         .then(response => response.json())
+         .then(data => {
+           console.log(data); // Handle the response from the server as needed
+   
+           // Check if the upload was successful
+           if (data.success) {
+             // Display a SweetAlert
+             Swal.fire({
+               title: 'Success!',
+               text: data.message,
+               icon: 'success',
+             });
+   
+             // Reload the page after a short delay (adjust the delay as needed)
+             setTimeout(() => {
+               window.location.reload();
+               // Optionally, scroll down after refreshing
+               window.scrollTo(0, document.body.scrollHeight);
+             }, 3000); // 1000 milliseconds = 1 second
+           } else {
+             // Handle other cases as needed
+           }
+         })
+         .catch(error => {
+           console.error('Error during fetch:', error);
+           // Handle errors here if necessary
+         });
+     });
+   });
+   
+   </script> 
+            
+            <%-include ('../layouts/adminFooter.ejs') %>

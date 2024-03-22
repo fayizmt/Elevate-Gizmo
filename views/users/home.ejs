@@ -1,0 +1,1005 @@
+
+<%-include ('../layouts/userHeader.ejs') %>
+<!-- Start Header Section -->
+<%-include ('../layouts/userSideBar.ejs') %>
+<!-- End Header Section -->
+
+<!-- Start Slider Section -->
+<section class="slider pt-0">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <%  for (let i = 0; i < bannerList.length; i++) { %>
+            <div class="carousel-item <% if(i === 0) { %> active <% } %> slider-area background_bg" data-img-src="/images/banner/<%= bannerList[i].image %>">
+                <div class="banner_slide_content <% if(i === 1) { %> right-align <% } else if(i === 2) { %> center-align <% } else { %> left-align <% } %>">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-7 col-9">
+                                <div class="slider-caption text-<% if(i === 1) { %> right <% } else if(i === 2) { %> center <% } else { %> left <% } %>">
+                                    <h1 class="animation" data-animation="fadeInDown" data-animation-delay="0.2s"><%=bannerList[i].bannerName%></h1>
+                                    <p class="animation" data-animation="fadeInUp" data-animation-delay="0.6s">Get up to 50% off your shopping items tomorrow!</p>
+                                    <a href="shop" class="btn btn-primary animation" data-animation="fadeInUp" data-animation-delay="1s">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+        <ol class="carousel-indicators">
+            <% for (let i = 0; i < bannerList.length; i++) { %>
+            <li data-target="#carouselExampleControls" data-slide-to="<%= i %>" <% if(i === 0) { %> class="active" <% } %> ></li>
+            <% } %>
+        </ol>
+    </div>
+</section>
+
+<!-- End Slider Section -->
+
+
+
+<!-- Start Popular Products Section -->
+<section class="pb_large">
+	<div class="container">
+    	<div class="row">
+        	<div class="col-12">
+            	<div class="title">
+                	<h4>OUR PRODUCTS</h4>
+                </div>
+            </div>
+        </div>
+		<div class="row">
+			<div class="col-12">
+            	<div class="products-slider4 products-style-1 same-nav owl-carousel owl-theme" data-margin="30" data-dots="false" data-nav="true" data-autoplay="false" data-loop="false">
+					
+                    <!-- produt listing start here -->
+                    <%  for (let i = 0; i < productList.length;i++){ %>
+
+                    <div class="item">
+                    	<div class="product-box common-cart-box">
+                        	<div class="product-img common-cart-img">
+                            	<img src="/images/products/<%= productList[i].images[0] %>" alt="product-img">
+                                <div class="hover-option">
+                                    <ul class="hover-icon">
+                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        <li><button onclick="addToWishlist('<%= productList[i].id %> ')" class="addWishlist" ><i class="fa fa-heart"></i></button></li>
+                                        <li><a href="/product-detail/<%= productList[i].id %>"><i class="fa fa-eye"></i></a></li>
+                                    </ul>
+                                    
+                                    
+                                </div>
+                            </div>
+                            <div class="product-info common-cart-info">
+                                <br>
+                                <a href="product-detail" class="text-muted"> <%=productList[i].category.category%></a>
+                            	<a href="product-detail" class="cart-name"> <%=productList[i].productName%></a>
+                                <!-- <div class="product-rate"> 
+                                    <i class="ion-android-star"></i> 
+                                    <i class="ion-android-star"></i> 
+                                    <i class="ion-android-star"></i> 
+                                    <i class="ion-android-star"></i> 
+                                    <i class="ion-android-star-half"></i> 
+                                </div> -->
+                                <p class="cart-price"><del>₹ 90.00</del>₹ <%=productList[i].price%></p>
+                            </div>
+                        </div>
+                    </div>
+                    <%}%>
+                      <!-- produt listing end here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Popular Products Section -->
+
+<!-- Start Testimonials Section -->
+
+<!-- End Testimonials Section -->
+
+<!-- Start Tab Section -->
+<section class="tab-section pb_large pt_large">
+	<div class="container">
+    	<div class="row">
+        	<div class="col-12">
+            	<div class="title">
+                	<h4>POPULAR PRODUCTS</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="tab-wrap">
+                    <ul id="tab-list" class="nav nav-tabs" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="man-tab" data-toggle="tab" href="#man" role="tab" aria-controls="man" aria-selected="true"><i class="icon icon-home"></i>Man's Fashion</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="women-tab" data-toggle="tab" href="#women" role="tab" aria-controls="women" aria-selected="false"><i class="icon icon-profile"></i>Women's Fashion</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="offer-tab" data-toggle="tab" href="#offer" role="tab" aria-controls="offer" aria-selected="false"><i class="icon icon-file-text"></i>Special Offer</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="new-tab" data-toggle="tab" href="#new" role="tab" aria-controls="new" aria-selected="false"><i class="icon icon-file-text"></i>New Collection</a>
+                      </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="tab-content tab_con">
+                    <div class="tab-pane fade show active" id="man" role="tabpanel" aria-labelledby="man-tab">
+                        <div class="carousel_slide3 products-style-1 same-nav owl-carousel owl-theme lazyOwl" data-margin="30" data-dots="false" data-autoplay="false" data-nav="true" data-loop="false">
+                            
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-1.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="blue-dot"></a></li>
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Variable product 001</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 90.00</del>$ 78.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-2.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="white-dot"></a></li>
+                                                <li><a href="#" class="yellow-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                                <li><a href="#" class="red-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Ornare sed consequat</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 95.00</del>$ 81.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-3.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                                <li><a href="#" class="orange-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Pellentesque posuere</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 90.00</del>$ 80.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-4.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="yellow-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Consequat posuere</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 50.00</del>$ 45.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-1.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="blue-dot"></a></li>
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Variable product 001</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 90.00</del>$ 78.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-2.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="white-dot"></a></li>
+                                                <li><a href="#" class="yellow-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                                <li><a href="#" class="red-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Ornare sed consequat</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 95.00</del>$ 81.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="women" role="tabpanel" aria-labelledby="women-tab">
+                        <div class="carousel_slide3 products-style-1 same-nav owl-carousel owl-theme lazyOwl" data-margin="30" data-dots="false" data-autoplay="false" data-nav="true" data-loop="false">
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-4.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="yellow-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Consequat posuere</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 50.00</del>$ 45.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-3.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                                <li><a href="#" class="orange-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Pellentesque posuere</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 90.00</del>$ 80.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-2.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="white-dot"></a></li>
+                                                <li><a href="#" class="yellow-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                                <li><a href="#" class="red-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail" class="cart-name">Ornare sed consequat</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 95.00</del>$ 81.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-1.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="blue-dot"></a></li>
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail" class="cart-name">Variable product 001</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 90.00</del>$ 78.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-4.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="yellow-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Consequat posuere</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 50.00</del>$ 45.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-3.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                                <li><a href="#" class="orange-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Pellentesque posuere</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 90.00</del>$ 80.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="offer" role="tabpanel" aria-labelledby="offer-tab">
+                    	<div class="carousel_slide3 products-style-1 same-nav owl-carousel owl-theme" data-margin="30" data-dots="false" data-autoplay="false" data-nav="true" data-loop="false">
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-1.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="blue-dot"></a></li>
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Variable product 001</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 90.00</del>$ 78.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-2.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="white-dot"></a></li>
+                                                <li><a href="#" class="yellow-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                                <li><a href="#" class="red-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Ornare sed consequat</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 95.00</del>$ 81.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-3.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                                <li><a href="#" class="orange-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Pellentesque posuere</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 90.00</del>$ 80.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-4.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="yellow-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Consequat posuere</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 50.00</del>$ 45.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-1.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="blue-dot"></a></li>
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Variable product 001</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 90.00</del>$ 78.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-2.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="white-dot"></a></li>
+                                                <li><a href="#" class="yellow-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                                <li><a href="#" class="red-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail" class="cart-name">Ornare sed consequat</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 95.00</del>$ 81.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="new" role="tabpanel" aria-labelledby="new-tab">
+                    	<div class="carousel_slide3 products-style-1 same-nav owl-carousel owl-theme" data-margin="30" data-dots="false" data-autoplay="false" data-nav="true" data-loop="false">
+                        	<div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-4.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="yellow-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Consequat posuere</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 50.00</del>$ 45.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-3.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                                <li><a href="#" class="orange-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Pellentesque posuere</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 90.00</del>$ 80.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-2.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="white-dot"></a></li>
+                                                <li><a href="#" class="yellow-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                                <li><a href="#" class="red-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Ornare sed consequat</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 95.00</del>$ 81.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-1.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="blue-dot"></a></li>
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Variable product 001</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 90.00</del>$ 78.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-4.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="yellow-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Consequat posuere</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 50.00</del>$ 45.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="product-box common-cart-box">
+                                    <div class="product-img common-cart-img">
+                                        <img src="/user/image/saller-img-3.jpg" alt="product-img">
+                                        <div class="hover-option">
+                                            <ul class="hover-icon">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                                            </ul>
+                                            <ul class="product-color">
+                                                <li><a href="#" class="black-dot"></a></li>
+                                                <li><a href="#" class="pink-dot"></a></li>
+                                                <li><a href="#" class="orange-dot"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info common-cart-info">
+                                        <a href="product-detail.html" class="cart-name">Pellentesque posuere</a>
+                                        <div class="product-rate"> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star"></i> 
+                                            <i class="ion-android-star-half"></i> 
+                                        </div>
+                                        <p class="cart-price"><del>$ 90.00</del>$ 80.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-accordion" class="accordion accordion-style1" role="tablist"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Start Tab Section -->
+
+<!-- Start Coupencode Section -->
+<section class="coupencode-wrap background_bg overlay-bg"  data-img-src="">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8 text-white">
+                <h2>Get Coupencode</h2>
+                <p>Sale available on selected Designer Brands that include Apparels, Footwear, Fashion Accessories & Watches.</p>
+            </div>
+            <div class="col-md-4 text-md-right">	
+                <a href="#" class="btn btn-primary border-0 mt-3 mt-md-0">get coupencode</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Coupencode Section -->
+
+
+
+
+
+<!-- Start Service Section -->
+<section>
+	<div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-sm-6">
+                <div class="servicebox">
+                    <div class="service-icon">
+                        <i class="fa fa-truck"></i>
+                    </div>
+                    <div class="fb-text">
+                    	<h5>FREE DELIVERY</h5>
+                    	<span>Worldwide</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="servicebox">
+                    <div class="service-icon">
+                        <i class="fa fa-headphones"></i>
+                    </div>
+                    <div class="fb-text">
+                    	<h5>24/ 7 SUPPORT</h5>
+                    	<span>Customer Support</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="servicebox">
+                    <div class="service-icon">
+                        <i class="fa fa-cc-mastercard"></i>
+                    </div>
+                    <div class="fb-text">
+                    	<h5>PAYMENT</h5>
+                    	<span>Secure System</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="servicebox">
+                    <div class="service-icon">
+                        <i class="fa fa-truck"></i>
+                    </div>
+                    <div class="fb-text">
+                    	<h5>TRUSTED</h5>
+                    	<span>enuine Products</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Service Section -->
+
+<!-- Start Footer Section -->
+
+<!-- End Footer Section -->
+
+<script>
+    const addWishlist = document.querySelector('.addWishlist');
+    
+    function addToWishlist(id) {
+        console.log(id);
+        
+        fetch('/wishlist/' + id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain' // Set content type to text/plain
+            },
+            body: id // Send id directly without converting to JSON
+        })
+        .then(response => {
+            return response.json(); // Parse response as plain text
+        })
+        .then(data => {
+            alert(data.message);
+        })
+        .catch(error => {
+            
+            console.error('Error:', error);
+            alert('Error adding item to wishlist. Please try again.');
+        });
+    }
+</script>
+
+
+<%-include ('../layouts/userFooter.ejs') %>

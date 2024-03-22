@@ -1,0 +1,143 @@
+/* Add your existing styles here */
+
+body {
+    background-color: #f0f0f0;
+}
+
+.white-popup {
+    position: relative;
+    background: #fff;
+    width: 80%;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.lr-popup h4 {
+    font-weight: bold;
+    font-size: 28px;
+    color: #333;
+}
+
+.subscribe-popup-form {
+    margin-top: 20px;
+}
+
+.subscribe-popup-form input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.subscribe-popup-form input:focus {
+    border-color: #eb3e32;
+}
+
+.form-check {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.defult-check {
+    display: none;
+}
+
+.checkmark {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 2px solid #eb3e32;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.checkmark:after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #eb3e32;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease;
+}
+
+.defult-check:checked + .checkmark:after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.forgot-password {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 14px;
+    display: block;
+    margin-top: 15px;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    background-color: #eb3e32;
+    color: #fff;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #c23a30;
+}
+
+h6 {
+    font-weight: 400;
+    color: #7a7a7a;
+    margin-top: 30px;
+}
+
+.sign-up {
+    color: #eb3e32;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    margin-top: 10px;
+    display: block;
+}
+
+.sign-up:hover {
+    text-decoration: underline;
+}
+
+.mfp-close {
+    width: 30px;
+    height: 30px;
+    background-color: #353f4d;
+    font-size: 18px;
+    color: #fff;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Add other styles as needed for your project */

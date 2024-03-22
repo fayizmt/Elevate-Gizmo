@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Favicon Icon Css -->
-<link rel="icon" type="image/png" sizes="32x32" href="/user/image/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/user/image/loader_logo.png">
 <!-- Animation CSS -->
 <link rel="stylesheet" href="/user/css/animate.css">	
 <!-- Animation CSS -->
@@ -31,7 +31,9 @@
 <!-- main css --> 
 <link href="/user/css/style.css" type="text/css" rel="stylesheet">
 <link href="/user/css/responsive.css" type="text/css" rel="stylesheet">
-<title>ATZ Shop - Online Shopping Store HTML Template</title>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<title>ElevateGizmo</title>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id={id}"></script>
@@ -54,8 +56,138 @@
 document.write("<sc"+"ript src='" +scJsHost +"statcounter.com/counter/counter.js'></"+"script>");
 </script>
 <!-- End of StatCounter Code -->
-
+<!-- axios -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lineicons@2.0.1/dist/css/lineicons.min.css">
 </head>
+
+<style>
+  .logo-name{
+    margin-left: -100px;
+    color: red;
+} 
+
+.remove-btn {
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: black;
+  padding: 5px 10px;
+  transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+  background-color: red;
+  color: white;
+}
+/* Cart Table Styles */
+.cart-section {
+    padding: 50px 0;
+}
+
+.cart-table {
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.cart-table th,
+.cart-table td {
+    padding: 15px;
+    vertical-align: middle;
+}
+
+.cart-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #333;
+}
+
+.cart-table td.product-name p {
+    font-weight: bold;
+    color: #333;
+}
+
+.cart-table td.product-price p,
+.cart-table td.product-total p {
+    font-weight: bold;
+    color: #333;
+}
+
+.cart-table .row-close a i {
+    color: #ccc;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.cart-table .row-close a i:hover {
+    color: #ff0000;
+}
+
+/* Quantity Input and Buttons */
+.product_count {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-number {
+    width: 50px;
+    text-align: center;
+    margin: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.btn-num-product-down,
+.btn-num-product-up {
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-num-product-down:hover,
+.btn-num-product-up:hover {
+    background-color: #0056b3;
+}
+
+/* Cart Total Box */
+.cart-inner-box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+.ci-title h6 {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.ci-caption ul {
+    list-style: none;
+    padding: 0;
+}
+
+.ci-caption ul li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+
+
+
+</style>
 <body class="theme-2">
 <!-- LOADER -->
 <div id="preloader">
@@ -63,4 +195,3 @@ document.write("<sc"+"ript src='" +scJsHost +"statcounter.com/counter/counter.js
         <img src="/user/image/loader_logo.png" alt="logo">
     </div>
 </div>
-<!-- LOADER -->

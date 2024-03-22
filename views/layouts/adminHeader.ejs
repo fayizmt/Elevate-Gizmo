@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>ElevateGizmo Dashboard</title>
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:title" content="" />
+        <meta property="og:type" content="" />
+        <meta property="og:url" content="" />
+        <meta property="og:image" content="" />
+        <!-- Favicon -->
+        <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+
+        <link rel="shortcut icon" type="image/x-icon" href="/user/image/loader_logo.png" />
+        <!-- Template CSS -->
+        <link href="/admin/css/main.css?v=1.1" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </head>
+    <style>
+    .image-preview-container {
+        display: flex;
+        gap: 10px; /* Adjust as needed */
+        flex-wrap: wrap;
+      }
+      
+      .image-preview {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        max-width: 200px; /* Set maximum width as needed */
+        height: auto; /* Adjust as needed */
+        border-radius: 8px; /* Add border-radius for rounded corners */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box-shadow for depth */
+        transition: transform 0.3s ease; /* Add transition for smooth hover effect */
+      }
+      
+      .image-preview img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+      
+      .button-container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.7); /* Adjust opacity as needed */
+        display: flex;
+        justify-content: space-between;
+        padding: 6px; /* Adjust padding as needed */
+        box-sizing: border-box;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      
+      .remove-button,
+      .add-button {
+        flex: 1;
+        margin: 0 3px; /* Adjust margin as needed */
+        padding: 8px; /* Adjust padding as needed */
+        border: none;
+        background-color: transparent;
+        color: white;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      
+      .remove-button:hover,
+      .add-button:hover {
+        background-color: rgba(255, 255, 255, 0.1); /* Adjust opacity as needed */
+      }
+      
+      .image-preview:hover {
+        transform: translateY(-5px); /* Add slight upward lift on hover */
+      }
+      
+      .image-preview:hover .button-container {
+        opacity: 1;
+      }
+      
+       </style>
+    <body>
+      

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/user/css/registration.css">
+</head>
+<body>
+    <div id="test-popup2" class="white-popup lr-popup mfp-hide">
+        <h4>Registration</h4>
+        <form class="subscribe-popup-form" method="post" action="/registration" id="registrationForm" onsubmit="return validateForm()">
+            <div>
+                <label for="name" class="error" id="nameError" style="color: red;"></label>
+                <input name="name" id="name" required type="text" placeholder="Enter Your name">
+                
+            </div>
+            
+            <div>
+                <label for="email" class="error" id="emailError" style="color: red;"></label>
+                <input name="email" id="email" required type="email" placeholder="Enter Your Email" value="">
+               
+            </div>
+            
+            <div>
+                <label for="mobile" class="error" id="mobileError" style="color: red;"></label>
+                <input name="mobile" id="mobile" required type="tel" placeholder="Enter Your Number" value="">
+              
+            </div>
+            
+            <div>
+                <label for="password" class="error" id="passwordError" style="color: red;"></label>
+                <input name="password" id="password" required type="password" placeholder="Enter Your Password" value="">
+                
+            </div>
+            
+            <div class="form-check">
+                <!-- Additional checkboxes or other inputs can be placed here -->
+            </div>
+            
+            <button class="btn btn-primary border-0" title="Subscribe" type="submit">Register</button>
+        </form>
+    </div>
+    
+    <script>
+        document.getElementById("name").addEventListener("blur", function() {
+            validateField("name", /^[a-zA-Z\s]+$/, "nameError", "Invalid name");
+        });
+
+        document.getElementById("email").addEventListener("blur", function() {
+            validateField("email", /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "emailError", "Invalid email");
+        });
+
+        document.getElementById("mobile").addEventListener("blur", function() {
+            validateField("mobile", /^[0-9]{10}$/, "mobileError", "Invalid mobile number");
+        });
+
+        document.getElementById("password").addEventListener("blur", function() {
+            validateField("password", /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, "passwordError", "Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, and one number");
+        });
+
+        function validateField(fieldId, regex, errorSpanId, errorMessage) {
+            var fieldValue = document.getElementById(fieldId).value;
+            var errorSpan = document.getElementById(errorSpanId);
+            if (!regex.test(fieldValue)) {
+                errorSpan.innerHTML = errorMessage;
+            } else {
+                errorSpan.innerHTML = "";
+            }
+        }
+
+        function validateForm() {
+            var isValid = true;
+            var fieldsToValidate = [{
+                    id: "name",
+                    regex: /^[a-zA-Z\s]+$/,
+                    errorSpanId: "nameError",
+                    errorMessage: "Invalid name"
+                },
+                {
+                    id: "email",
+                    regex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                    errorSpanId: "emailError",
+                    errorMessage: "Invalid email"
+                },
+                {
+                    id: "mobile",
+                    regex: /^[0-9]{10}$/,
+                    errorSpanId: "mobileError",
+                    errorMessage: "Invalid mobile number"
+                },
+                {
+                    id: "password",
+                    regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+                    errorSpanId: "passwordError",
+                    errorMessage: "Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, and one number"
+                }
+            ];
+
+            fieldsToValidate.forEach(function(field) {
+                var fieldValue = document.getElementById(field.id).value;
+                var errorSpan = document.getElementById(field.errorSpanId);
+                if (!field.regex.test(fieldValue)) {
+                    errorSpan.innerHTML = field.errorMessage;
+                    isValid = false;
+                } else {
+                    errorSpan.innerHTML = "";
+                }
+            });
+
+            return isValid;
+        }
+    </script>
+</body>
+</html>
