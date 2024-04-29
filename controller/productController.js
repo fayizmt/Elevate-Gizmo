@@ -32,6 +32,7 @@ const addProduct = async (req,res) => {
         const category = req.body.category;
         const color = req.body.color;
         const price = req.body.price;
+        const actualPrice = req.body.actualPrice;
         const quantity = req.body.quantity;
 
         const images = [];
@@ -45,6 +46,7 @@ const addProduct = async (req,res) => {
             category: category,
             color: color,
             price: price,
+            actualPrice: actualPrice,
             quantity: quantity,
             images: images,
             
@@ -92,6 +94,7 @@ const updateProduct = async (req, res) => {
       const category = req.body.category;
       const color = req.body.color;
       const price = req.body.price;
+      const actualPrice =req.body.actualPrice;
     //   const brand = req.body.brand;
       const quantity = req.body.quantity;
       const images = [];
@@ -106,6 +109,7 @@ const updateProduct = async (req, res) => {
         category: category,
         color: color,
         price: price,
+        actualPrice: actualPrice,
         // brand: brand,
         quantity: quantity,
         is_block: req.body.is_block,

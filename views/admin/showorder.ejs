@@ -1,95 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>Nest Dashboard</title>
-        <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <meta name="description" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:title" content="" />
-        <meta property="og:type" content="" />
-        <meta property="og:url" content="" />
-        <meta property="og:image" content="" />
-        <!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="/public/assets/imgs/theme/favicon.svg" />
-        <!-- Template CSS -->
-        <link href="/public/assets/css/main.css?v=1.1" rel="stylesheet" type="text/css" />
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    </head>
+<%-include ('../layouts/adminHeader.ejs') %>
 
-    <body>
         <div class="screen-overlay"></div>
-        <aside class="navbar-aside" id="offcanvas_aside">
-            <div class="aside-top">
-                <a href="index" class="brand-wrap">
-                    <img src="/public/assets/imgs/icons/starts-disable.svg" class="logo" alt="Nest Dashboard" />
-                </a>
-                <div>
-                    <button class="btn btn-icon btn-aside-minimize"><i class="text-muted material-icons md-menu_open"></i></button>
-                </div>
-            </div>
-            <nav>
-                <ul class="menu-aside ">
-                    <li class="menu-item ">
-                        <a class="menu-link" href="dashboard">
-                            <i class="icon material-icons md-home"></i>
-                            <span class="text">Dashboard</span>
-                        </a>
-                    </li>
+        <%-include ('../layouts/adminSideBar.ejs') %>
 
-                    <li class="menu-item active">
-                        <a class="menu-link" href="order">
-                            <i class="icon material-icons md-shopping_cart"></i>
-                            <span class="text">Order</span>
-                        </a>
-                    </li>
-                    
-                    
-     
-                    <li class="menu-item ">
-                        <a class="menu-link" href="product">
-                            <i class="icon material-icons md-shopping_bag"></i>
-                            <span class="text">Products</span>
-                        </a>
-                    </li>
-
-                    <li class="menu-item ">
-                        <a class="menu-link" href="category">
-                            <i class="icon material-icons md-category"></i>
-                            <span class="text">Categories</span>
-                        </a>
-                    </li>
-
-                    <li class="menu-item">
-                        <a class="menu-link" href="users">
-                            <i class="icon material-icons md-perm_identity"></i>
-                            <span class="text">Users</span>
-                        </a>
-                    </li>
-
-                    <li class="menu-item">
-                        <a class="menu-link " href="coupon">
-                            <i class="icon material-icons md-local_offer"></i>
-                            <span class="text">Coupons</span>
-                        </a>
-                    </li>
-
-                    <li class="menu-item">
-                        <a class="menu-link" href="banner">
-                            <i class="icon material-icons md-photo"></i>
-                            <span class="text">Banner</span>
-                        </a>
-                    </li>
-                    
-
-                    <li class="menu-item mt-auto">
-                        <a class="menu-link" href="logout">
-                            <i class="icon material-icons md-exit_to_app"></i>
-                            <span class="text">Logout</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
         </aside>
         <main class="main-wrap">
             <header class="main-header navbar">
@@ -150,7 +63,7 @@
                 <div class="content-header">
                     <div>
                         <h2 class="content-title card-title">Order detail</h2>
-                        <p>Details for Order ID: <%= order._id.toString().substring(0, 6) %></p>
+                        <p>Details for Order ID: <%= order._id %></p>
                     </div>
                 </div>
                 <div class="card">
@@ -176,9 +89,9 @@
                                     <div class="text">
                                         <h6 class="mb-1">Customer</h6>
                                         <p class="mb-1">
-                                            <%= order.deliveryDetails.fullName %> <br />
-                                            <%= order.deliveryDetails.email %> <br />
-                                            <%= order.deliveryDetails.phone %>
+                                            <%= order.name %> <br />
+                                            <%= order.email %> <br />
+                                            <%= order.mobile %>
                                         </p>
                                     </div>
                                 </article>
@@ -191,7 +104,7 @@
                                     <div class="text">
                                         <h6 class="mb-1">Order info</h6>
                                         <p class="mb-1">
-                                            <%= order.paymentMethod %> <br />
+                                            <%= order.paymentOption %> <br />
                                             Amount:<%= order.totalAmount %> <br />
                                             Status: new
                                         </p>
@@ -206,8 +119,8 @@
                                     <div class="text">
                                         <h6 class="mb-1">Deliver to</h6>
                                         <p class="mb-1">
-                                            City: <%= order.deliveryDetails.city %> <br /><%= order.deliveryDetails.housename %><br />
-                                            <%= order.deliveryDetails.pincode %>                                        </p>
+                                            City: <%= order.city %> <br /><%= order.houseName %><br />
+                                            <%= order.pincode %>                                        </p>
                                     </div>
                                 </article>
                             </div>
@@ -227,46 +140,53 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <% order.products.forEach(product => { %>
+                                            <% order.product.forEach(product => { %>
                                                 <tr>
                                                     <td>
                                                         <a class="itemside" href="#">
                                                             <div class="left">
-                                                                <img src="/public/assets/images/products/sharpened/<%= product.productId.images.image1 %>" width="40" height="40" class="img-xs" alt="Item" />
+                                                                <% const productDetail = productDetails.find(detail => detail._id.toString() === product.id.toString()); %>
+                                                                <% if (productDetail && productDetail.images && productDetail.images.length > 0) { %>
+                                                                    <img src="/images/products/<%= productDetail.images[0] %>" width="40" height="40" class="img-xs" alt="Item" />
+                                                                <% } else { %>
+                                                                    <!-- Display a placeholder image or a message when no images are available -->
+                                                                    <img src="/images/placeholder.jpg" width="40" height="40" class="img-xs" alt="Placeholder" />
+                                                                <% } %>
                                                             </div>
-                                                            <div class="info"><%= product.productId.name %></div>
+                                                            <div class="info">
+                                                                <span><%= productDetail.productName %></span>
+                                                            </div>
                                                         </a>
                                                     </td>
                                                     <td><%= product.price %></td>
-                                                    <td><%= product.quantity %></td>
-                                                    <td ><%= product.totalPrice %></td>
+                                                    <td><%= product.count %></td>
+                                                    <td><%= order.totalAmount %></td>
                                                     <td>
-                                                        <% if (product.productstatus === 'placed') { %>
+                                                        <% if (order.orderStatus === 'Placed') { %>
                                                             <span class="badge rounded-pill alert-primary text-primary">Placed</span>
-                                                        <% } else if (product.productstatus === 'Shipped') { %>
+                                                        <% } else if (order.orderStatus === 'Shipped') { %>
                                                             <span class="badge rounded-pill alert-info text-info">Shipped</span>
-                                                        <% } else if (product.productstatus === 'Out for Delivery') { %>
+                                                        <% } else if (order.orderStatus === 'Out for Delivery') { %>
                                                             <span class="badge rounded-pill alert-warning text-warning">Out for Delivery</span>
-                                                        <% } else if (product.productstatus === 'Delivered') { %>
+                                                        <% } else if (order.orderStatus === 'Delivered') { %>
                                                             <span class="badge rounded-pill alert-success text-success">Delivered</span>
-                                                        <% } else if (product.productstatus === 'cancel') { %>
+                                                        <% } else if (order.orderStatus === 'cancelled') { %>
                                                             <span class="badge rounded-pill alert-danger text-danger">Cancelled</span>
-                                                        <% } else if (product.productstatus === 'Return') { %>
+                                                        <% } else if (order.orderStatus === 'Return') { %>
                                                             <span class="badge rounded-pill alert-secondary text-secondary">Returned</span>
                                                         <% } %>
                                                     </td>
                                                     <td>
-                                                        <select class="form-select d-inline-block mb-lg-0 mr-5 mw-200" id="orderstatus" onchange="changeProductStatus('<%= product._id %>','<%=order._id%>')" <%= product.productstatus === 'cancel' || product.productstatus === 'Return' ? 'disabled' : '' %>>
-                                                            <option value="placed" <%= product.productstatus === 'placed' ? 'selected' : '' %>>Placed</option>
-                                                            <option value="Shipped" <%= product.productstatus === 'Shipped' ? 'selected' : '' %>>Shipped</option>
-                                                            <option value="Out for Delivery" <%= product.productstatus === 'Out for Delivery' ? 'selected' : '' %>>Out for Delivery</option>
-                                                            <option value="Delivered" <%= product.productstatus === 'Delivered' ? 'selected' : '' %>>Delivered</option>
+                                                        <select class="form-select d-inline-block mb-lg-0 mr-5 mw-200" id="orderstatus" onchange="changeProductStatus('<%= product.id %>','<%= order._id %>')" <%= order.orderStatus === 'cancelled' || order.orderStatus === 'Return' ? 'disabled' : '' %>>
+                                                            <option value="placed" <%= order.orderStatus === 'placed' ? 'selected' : '' %>>Placed</option>
+                                                            <option value="Shipped" <%= order.orderStatus === 'Shipped' ? 'selected' : '' %>>Shipped</option>
+                                                            <option value="Out for Delivery" <%= order.orderStatus === 'Out for Delivery' ? 'selected' : '' %>>Out for Delivery</option>
+                                                            <option value="Delivered" <%= order.orderStatus === 'Delivered' ? 'selected' : '' %>>Delivered</option>
                                                         </select>
-                                                        
-                                                        
                                                     </td>
                                                 </tr>
                                             <% }) %>
+                                            
                                             <tr>
                                                 <td colspan="6">
                                                     <article class="float-end">
@@ -276,7 +196,7 @@
                                                         </dl>
                                                         <dl class="dlist">
                                                             <dt class="text-muted">Status:</dt>
-                                                            <% if (order.paymentMethod === "onlinePayment") { %>
+                                                            <% if (order.paymentOption === "upi") { %>
                                                                 <dd>
                                                                     <span class="badge rounded-pill alert-success text-success">Payment done</span>
                                                                 </dd>
@@ -316,7 +236,7 @@
                 swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: "Somthing happened",
+                    text: "Something happened",
                 });
             }
         },
@@ -325,28 +245,6 @@
         }
     });
 }
-
             </script>
             <!-- content-main end// -->
-            <footer class="main-footer font-xs">
-                <div class="row pb-30 pt-15">
-                    <div class="col-sm-6">
-                        <script>
-                            document.write(new Date().getFullYear());
-                        </script>
-                        &copy; Nest - HTML Ecommerce Template .
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="text-sm-end">All rights reserved</div>
-                    </div>
-                </div>
-            </footer>
-        </main>
-        <script src="/public/assets/js/vendors/jquery-3.6.0.min.js"></script>
-        <script src="/public/assets/js/vendors/bootstrap.bundle.min.js"></script>
-        <script src="/public/assets/js/vendors/select2.min.js"></script>
-        <script src="/public/assets/js/vendors/perfect-scrollbar.js"></script>
-        <script src="/public/assets/js/vendors/jquery.fullscreen.min.js"></script>
-        <script src="/public/assets/js/main.js?v=1.1" type="text/javascript"></script>
-    </body>
-</html>
+            <%-include ('../layouts/adminFooter.ejs') %>

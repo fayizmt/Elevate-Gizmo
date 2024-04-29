@@ -82,58 +82,95 @@
                         <div class="card mt-4">
                             <div class="table-data">
                                 <div class="order">
-                                   
+                                    <%if(coupon.length>0){%>
                                         <div class="table-responsive">
                                             <table id="tablePagination" class="table table-bordered table-hover table-striped">
                                                 <thead class="thead-dark">
+                                                   
                                                     <tr>
                                                         <th scope="col" class="text-center">Sl. No.</th>
                                                         <th scope="col" class="text-center">Coupon Name</th>
                                                         <th scope="col" class="text-center">Coupon Code</th>
                                                         <th scope="col" class="text-center">Discount Percentage</th>
                                                         <th scope="col" class="text-center">Max Discount Amount:</th>
-                                                        <th scope="col" class="text-center">Criteria Amount</th>
+                                                        <th scope="col" class="text-center">activationDate:</th>
                                                         <th scope="col" class="text-center">Expire Date</th>
+                                                        <th scope="col" class="text-center">Criteria Amount</th>
                                                         <th scope="col" class="text-center">Edit</th>
                                                         <th scope="col" class="text-center">Block</th>
                                                     </tr>
+                                                       
                                                 </thead>
                                                 <tbody>
-                                                   
-                                                    <tr>
-                                                        <td class="text-center"></td>
-                                                        <td class="text-center"></td>
-                                                        <td class="text-center"></td>
-                                                        <td class="text-center"></td>
-                                                        <td class="text-center"></td>
-                                                        <td class="text-center"></td>
-                                                        <td class="text-center"></td>
-                                                        <td class="text-center"><a href="editcoupon"
+
+                                                    <%for(i=0; i < coupon.length; i++){%>
+                                                    <tr >
+                                                        <td class="text-center"><%=i+1 %></td>
+                                                        <td class="text-center"><%=coupon[i].name%></td>
+                                                        <td class="text-center"><%=coupon[i].couponCode%></td>
+                                                        <td class="text-center"><%=coupon[i].discountPercentage%></td>
+                                                        <td class="text-center"><%=coupon[i].maxDiscountAmount%></td>
+                                                        <td class="text-center"><%=coupon[i].activationDate%></td>
+                                                        <td class="text-center"><%=coupon[i].expiryDate%></td>
+                                                        <td class="text-center"><%=coupon[i].criteriaAmount%></td>
+                                                        <td class="text-center"><a href="/admin/editcoupon?id=<%= coupon[i].id %>"
                                                                 class="btn btn-sm btn-primary">Edit</a></td>
                                                         <td class="text-center">
-                                                         
-                                                            <a href="#" class="btn btn-sm btn-success unblock-user"
-                                                                data-user-id="">Unblock</a>
-                                                            
-                                                            <a href="#" class="btn btn-sm btn-warning block-user"
-                                                                data-user-id="">Block</a>
-                                                           
+                                                            <button type="button" class="btn btn-danger btn-sm" data-bs-target="#mod<%= coupon._id %>" data-bs-toggle="modal" data-bs-target="#mod">
+                                                                Remove
+                                                              </button>
                                                         </td>
                                                     </tr>
-                                                  
+                                                <%}%> 
                                                 </tbody>
                                             </table>                                                
                                         </div>
-                                    
+                                    <%}else{%>
                                         <p>No users found in the database.</p>
                                    
                                 </div>
                             </div>
                         </div>
     
-
+                 <%}%>
                 </div>
             </section>
+            <script>
+
+
+
+                function removeCoupon(id) {
+                    fetch(`/coupon/${id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        throw new Error('Network response was not ok.');
+                    })
+                    .then(data => {
+                        console.log(data);
+            
+                        // Assuming you want to remove the row containing the removed coupon
+                        const rowToRemove = document.querySelector(`.row-${id}`);
+                        if (rowToRemove) {
+                            rowToRemove.remove();
+                        }
+            
+                        Swal.fire('Success', 'Coupon removed successfully!', 'success');
+                    })
+                    .catch(error => {
+                        console.error('There was a problem removing the coupon:', error);
+                        // Optionally show an error message or handle the error
+                        Swal.fire('Error', 'Failed to remove coupon.', 'error');
+                    });
+                }
+            </script>
+            
             
             <!-- content-main end// -->
             <%-include ('../layouts/adminFooter.ejs') %>

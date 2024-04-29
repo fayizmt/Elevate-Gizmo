@@ -23,13 +23,17 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-
+    actualPrice: {
+      type: Number,
+      required: true,
+    },
     images: {
       type: Array,
     },
     quantity: {
       type: Number,
       required: true,
+      min: 0,
     },
     
     is_block: {

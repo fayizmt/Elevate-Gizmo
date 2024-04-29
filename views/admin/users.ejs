@@ -80,72 +80,59 @@
                     <div class="table-data">
                         <div class="order">
                            
-                                <div class="table-responsive">
-                                    <table id="tablePagination" class="table table-bordered table-hover table-striped">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th scope="col">
-                                                    <center>Sl.No.</center>
-                                                </th>
-                                                <th scope="col">
-                                                    <center>Name</center>
-                                                </th>
-                                                <th scope="col">
-                                                    <center>Email</center>
-                                                </th>
-                                                <th scope="col">
-                                                    <center>Mobile</center>
-                                                </th>
-                                                <th scope="col">
-                                                    <center>Verified</center>
-                                                </th>
-                                                <th scope="col">
-                                                    <center>Block / Unblock</center>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                            <div class="table-responsive">
+                                <table id="tablePagination" class="table table-bordered table-hover table-striped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">
+                                                <center>Sl.No.</center>
+                                            </th>
+                                            <th scope="col">
+                                                <center>Name</center>
+                                            </th>
+                                            <th scope="col">
+                                                <center>Email</center>
+                                            </th>
+                                            <th scope="col">
+                                                <center>Mobile</center>
+                                            </th>
                                            
-                                                    <tr>
-                                                        <td align="center">
-                                                           
-                                                        </td>
-                                                        <td align="center">
-                                                            
-                                                        </td>
-                                                        <td align="center">
-                                                            
-                                                        <td align="center">
-                                                          
-                                                        </td>
-                                                        <td align="center">
-                                                          
-                                                        </td>
-
-
-                                                        <td align="center">
-                                                           
-                                                                <a class="unblock-user" data-user-id=""><span
-                                                                        class="badge rounded-pill alert-success">unblock</span></a>
-                                                              
-                                                                    <a class="block-user"
-                                                                        data-user-id=""><span
-                                                                            class="badge rounded-pill alert-warning">block</span></a>
-                                                                  
-                                                        </td>
-
-                                                    </tr>
-                                                    
-                                              
-                                        </tbody>
-                                    </table>
-                                    
-                                </div>
-                             
-                                    <p>No users found in the database.</p>
-                                   
-        
-                        </div>
+                                            <th scope="col">
+                                                <center>Block / Unblock</center>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for (let i = 0; i < users.length; i++) { %>
+                                        <tr>
+                                            <td align="center"><%= i + 1 %></td>
+                                            <td align="center"><%= users[i].name %></td>
+                                            <td align="center"><%= users[i].email %></td>
+                                            <td align="center"><%= users[i].mobile %></td>
+                                            <!-- <td align="center"><%= users[i].isVerified %></td> -->
+                                            <td align="center">
+                                                <% if (users[i].isBlocked) { %>
+                                                <a class="unblock-user" data-user-id="<%= users[i]._id %>"><span
+                                                        class="badge rounded-pill alert-success">unblock</span></a>
+                                                <% } else { %>
+                                                <a class="block-user" data-user-id="<%= users[i]._id %>"><span
+                                                        class="badge rounded-pill alert-warning">block</span></a>
+                                                <% } %>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                        <% if (users.length === 0) { %>
+                                        <tr>
+                                            <td colspan="6" align="center">No users found in the database.</td>
+                                        </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                                                </div>
+                                            </div>
+                                            
                     </div>
                 </div>
             </div>

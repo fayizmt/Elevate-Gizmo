@@ -77,33 +77,47 @@
                         <div class="table-data">
                             <div class="order">
                               
-                                    <div class="table-responsive">
-                                        <table id="tablePagination" class="table table-bordered table-hover table-striped">
-                                            <thead class="thead-dark">
+                                <div class="table-responsive">
+                                    <table id="tablePagination" class="table table-bordered table-hover table-striped">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col"><center>User Id</center></th>
+                                                <th scope="col"><center>Order Id</center></th>
+                                                <th scope="col"><center>Payment Method</center></th>
+                                                <th scope="col"><center>Total</center></th>
+                                                <th scope="col"><center>Show</center></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% if (orders && orders.length > 0) { %>
+                                                <% orders.forEach((order) => { %>
+                                                    <% if (order.orderDetails && order.orderDetails.length > 0) { %>
+                                                        <% order.orderDetails.forEach((detail) => { %>
+                                                            <tr>
+                                                                <td align="center"><%= order.userId %></td>
+                                                                <td align="center"><%= detail._id %></td>
+                                                                <td align="center"><%= detail.paymentOption %></td>
+                                                                <td align="center"><%= detail.totalAmount %></td>
+                                                                <td align="center"><a href="/admin/showorder?id=<%= detail._id %>">Show</a></td>
+                                                            </tr>
+                                                        <% }) %>
+                                                    <% } else { %>
+                                                        <tr>
+                                                            <td align="center"><%= order.userId %></td>
+                                                            <td align="center"><%= order._id %></td>
+                                                            <td colspan="3" align="center">No order details available</td>
+                                                        </tr>
+                                                    <% } %>
+                                                <% }) %>
+                                            <% } else { %>
                                                 <tr>
-                                                    <th scope="col"><center>Sl.No.</center></th>
-                                                    <th scope="col"><center>Order Id</center></th>
-                                                    <th scope="col"><center>Payment Method</center></th>
-                                                    <th scope="col"><center>Total</center></th>
-                                                    <th scope="col"><center>Show</center></th>
+                                                    <td colspan="5" align="center">No orders found</td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                               
-                                                    <tr>
-                                                        <td align="center"></td>
-                                                        <td align="center"></td>
-                                                        <td align="center"></td>
-                                                        <td align="center">></td>
-                                                        <td align="center"><a href="/admin/showorder">Click</a></td>
-                                                    </tr>
-                                               
-                                            </tbody>
-                                        </table>
-                                    </div>
-                               
-                                    <p>No users found in the database.</p>
-                              
+                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>

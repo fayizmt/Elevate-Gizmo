@@ -1,8 +1,8 @@
-
 const cartDb = require("../model/cart");
 const userDb = require("../model/signupModel");
 const productDb = require("../model/productModel");
 const Category = require("../model/categoryModel");
+const couponDb = require("../model/couponModel")
 const { ObjectId } = require("mongoose").Types;
 
 const loadCart = async (req,res) => {
@@ -48,7 +48,7 @@ const loadCart = async (req,res) => {
               ]);
               Total = total[0].total;
     
-              // console.log(Total);
+              console.log(total);
             //   console.log(userId);
     
               res.render("cart", {
@@ -193,9 +193,9 @@ const loadCart = async (req,res) => {
             const userId = req.body.userId;
             const productId = req.body.productId;
             const count = parseInt(req.body.count);
-            console.log(userId);
-            console.log(productId);
-            console.log(count);
+            // console.log(userId);
+            // console.log(productId);
+            // console.log(count);
     
             const cartData = await cartDb.findOne(
                 {
@@ -260,10 +260,50 @@ const loadCart = async (req,res) => {
             res.json({ changeSuccess: false, message: "An error occurred" });
         }
     };
+
+    const checkCoupon = async (req, res) => {
+      try {
+          const userId = req.session.user_id; // Make sure user_id is properly set in the session
+          const couponCode = req.body.couponCode; // Correct variable name to match client-side code
+          const currentDate = new Date();
+  
+          const cartData = await cartDb.findOne({ userId: userId });
+          const cartTotal = cartData.products.reduce((acc, val) => acc + val.totalPrice, 0);
+  
+          const couponData = await couponDb.findOne({ couponCode: couponCode });
+          if (couponData) {
+              if (currentDate >= couponData.activationDate && currentDate <= couponData.expiryDate) {
+                  const isUserUsed = couponData.usedUsers.includes(userId);
+                  if (!isUserUsed) {
+                      if (cartTotal >= couponData.criteriaAmount) {
+                          await couponDb.findOneAndUpdate({ couponCode: couponCode }, { $push: { usedUsers: userId } });
+                          await cartDb.findOneAndUpdate({ userId: userId }, { $set: { couponDiscount: couponData._id } });
+                          res.json({ coupon: true });
+                      } else {
+                          res.json({ coupon: 'amount issue' });
+                      }
+                  } else {
+                      res.json({ coupon: 'used' });
+                  }
+              } else {
+                  res.json({ coupon: 'coupon not active' });
+              }
+          } else {
+              res.json({ coupon: false });
+          }
+      } catch (error) {
+          console.error('Error applying coupon:', error);
+          res.status(500).json({ error: 'Internal server error' }); // Example of enhanced error handling
+      }
+  };
+  
+    
+
     
 module.exports = {
     loadCart,
     addToCart,
     removeCartItem,
-    cartQuantity
+    cartQuantity,
+    checkCoupon,
 }

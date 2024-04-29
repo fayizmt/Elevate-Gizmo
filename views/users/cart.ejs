@@ -1,4 +1,4 @@
-<!-- <%-include ('../layouts/userHeader.ejs') %> -->
+<%-include ('../layouts/userHeader.ejs') %>
 
 
 <!-- Start Header Section -->
@@ -330,12 +330,13 @@
                         </div>
                         <div class="ci-caption">
                             <p>Enter Your Coupon Code If you have one</p>
-                            <form>
-                                <input required="" class="form-control" type="text" placeholder="Coupon Code">
+                            <form id="applyCouponForm">
+                                <input required="" class="form-control" type="text" id="couponCodeInput" placeholder="Enter coupon code">
                                 <button class="btn btn-secondary" type="submit">Apply Coupon Code</button>
                             </form>
                         </div>
                     </div>
+                    
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="cart-inner-box box-2 text-center">
@@ -349,7 +350,7 @@
                             </ul>
                         </div>
                         <div class="ci-btn">
-                            <a href="checkout.html" class="btn btn-primary btn-block rounded-0">Proceed to Checkout</a>
+                            <a href="checkout" class="btn btn-primary btn-block rounded-0">Proceed to Checkout</a>
                         </div>
                     </div>
                 </div>
@@ -360,9 +361,10 @@
     <div class="error-content text-center">
         <dotlottie-player class="mx-auto d-block" src="https://lottie.host/5476084d-d6d5-4baf-b5a2-876d2628363b/8rll48Mwdf.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
         <h1 class="error-title">Nothing in Cart Yet!</h1>
-        <p>Add Products to Cart</p>
-        <a href="/shop"><button class="btn primary-btn">Continue Shopping</button></a>
-    </div>
+        <p class="error-message">Add Products to Cart</p>
+        <a href="/shop" class="btn primary-btn">Continue Shopping</a>
+      </div>
+      
 <% } %>
 
 <!-- End Cart Box Section -->
@@ -441,8 +443,7 @@ function cartCount(productId, userId, count) {
     });
 }
 
-</script>
-<script>
+
     // const removeProduct = document.querySelector('.remove-btn')
     function removeProduct(productId) {
     fetch(`/cart/${productId}`, {
@@ -470,7 +471,69 @@ function cartCount(productId, userId, count) {
       Swal.fire('Error', 'Failed to remove product.', 'error');
     });
   }
-  </script>
+  
 
-<!-- <%-include ('../layouts/userFooter.ejs') %> -->
+  document.getElementById('applyCouponForm').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const couponCode = document.getElementById('couponCodeInput').value.trim();
+    if (couponCode) {
+        try {
+            const response = await fetch('/couponCheck', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ couponCode: couponCode }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.coupon === true) {
+                    // Use SweetAlert for success message
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Coupon applied successfully!',
+                    }).then((result) => {
+                        // You can update the UI or perform other actions here
+                        if (result.isConfirmed) {
+                            // Redirect or refresh the page, etc.
+                        }
+                    });
+                } else {
+                    // Use SweetAlert for error message
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to apply coupon: ' + data.coupon,
+                    });
+                    // Handle other coupon response scenarios here
+                }
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        } catch (error) {
+            console.error('There was a problem applying the coupon:', error);
+            // Use SweetAlert for error message
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to apply coupon. Please try again later.',
+            });
+        }
+    } else {
+        // Use SweetAlert for empty coupon code
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Please enter a coupon code.',
+        });
+    }
+});
+
+
+
+</script>
+<%-include ('../layouts/userFooter.ejs') %>
 

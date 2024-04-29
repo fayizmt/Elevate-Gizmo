@@ -35,7 +35,7 @@ adminRoute.get("/forget-password",auth.isLogout, adminController.forgetPasswordL
 adminRoute.post("/forget-password", adminController.resetPassword);
 
 //Home
-adminRoute.get('/dashboard',auth.isLogin,adminController.loadHome)
+adminRoute.get('/dashboard',auth.isLogin,adminController.loadDashboard)
 
 adminRoute.get('/logout',auth.isLogin,adminController.adminLogout)
 
@@ -87,10 +87,14 @@ adminRoute.post('/addcoupon',couponController.addCoupon)
 //edit Coupon
 adminRoute.get('/editcoupon',couponController.editCouponLoad)
 adminRoute.post('/editcoupon',couponController.updateCoupon)
+adminRoute.get("/deletecoupon",couponController.removeCoupon);
+
 
 //order
-adminRoute.get('/order',orderController.loadOrder)
-adminRoute.get('/order',orderController.loadShowOrder)
+adminRoute.get('/order',adminController.loadOrder)
+adminRoute.get('/showorder',adminController.loadShowOrder)
+adminRoute.post('/updateProductStatus',adminController.updateProductStatus)
+
 
 
 module.exports=adminRoute

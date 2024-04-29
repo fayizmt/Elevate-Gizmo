@@ -183,9 +183,201 @@ document.write("<sc"+"ript src='" +scJsHost +"statcounter.com/counter/counter.js
     font-size: 16px;
     color: #333;
 }
+.addCart {
+  background-color: rgb(63, 63, 65);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  width: 35px; /* Adjust width and height as needed */
+  height: 35px;
+  margin-left: 5px;
+  overflow: hidden;
+  border-radius: 50%;
+}
 
+.addCart i {
+  font-size: 15px; /* Adjust icon size as needed */
+  color:white;
+  transition: color 0.3s ease;
+}
 
+.addCart:hover  {
+  color: red;
+}
 
+.addWishlist {
+  background-color: rgb(63, 63, 65);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  width: 35px; /* Adjust width and height as needed */
+  height: 35px;
+  margin-left: 5px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.addWishlist i {
+  font-size: 15px; /* Adjust icon size as needed */
+  color:white;
+  transition: color 0.3s ease;
+}
+
+.addWishlist:hover  {
+  color: red;
+}
+
+.productButton {
+  background-color: rgb(63, 63, 65);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  width: 35px; /* Adjust width and height as needed */
+  height: 35px;
+  margin-left: 5px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.productButton i {
+  font-size: 15px; /* Adjust icon size as needed */
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.productButton:hover  {
+  color: red;
+}
+
+.error-content {
+  text-align: center;
+  padding: 50px;
+}
+
+.error-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.error-message {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ff0000; /* Change color as needed */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3; /* Change color on hover */
+}
+
+.search-box {
+  border: 1px solid red; 
+  color: red; 
+  padding: 8px; 
+  border-radius: 5px; 
+}
+
+/* Optional: Hover effect */
+.search-box:hover {
+  border-color: darkred; 
+}
+
+/* Style for radio buttons */
+.slider-values input[type="radio"] {
+  display: none; /* Hide the actual radio buttons */
+}
+
+.slider-values label {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.slider-values label:before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.slider-values input[type="radio"]:checked + label:before {
+  background-color: #ff0000; /* Change color when radio button is checked */
+}
+
+/* Style for Apply Filters button */
+.slider-values {
+  display: flex;
+  flex-direction: column;
+}
+
+.slider-values label {
+  margin-bottom: 10px;
+}
+
+/* Style for Apply Filters button */
+#applyFiltersBtn {
+  display: block; /* Ensures the button is on its own line */
+  margin-top: 10px; /* Adds space between radio buttons and the button */
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+#applyFiltersBtn:hover {
+  background-color: #db1111; /* Darker color on hover */
+}
+/* my account  */
+.menu-item {
+    position: relative;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff; /* Background color of the submenu */
+    padding: 10px;
+    border: 1px solid #ccc; /* Border color of the submenu */
+    z-index: 1000; /* Ensure the submenu appears above other elements */
+}
+
+.menu-item:hover .submenu {
+    display: block; /* Show the submenu when hovering over the menu item */
+}
+.submenu li {
+    color: #333; /* Text color of the submenu items */
+    margin-bottom: 5px; /* Space between submenu items */
+}
+
+.submenu li a {
+    color: #333; /* Link color of the submenu items */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.submenu li a:hover {
+    color: #f00; /* Change link color on hover */
+}
 
 </style>
 <body class="theme-2">

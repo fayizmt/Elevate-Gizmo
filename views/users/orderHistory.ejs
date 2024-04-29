@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElevateGizmo | Order History</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        .order {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .order-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .order-info i {
+            font-size: 20px;
+            margin-right: 10px;
+            color: #007bff;
+        }
+
+        .order-info p {
+            margin: 0;
+        }
+
+        .order-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-details p {
+            margin: 5px 0;
+        }
+
+        .products {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .product {
+            width: calc(33.33% - 20px);
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .product-info {
+            margin-top: 10px;
+        }
+
+        .product-info p {
+            margin: 5px 0;
+        }
+
+        .status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .status div {
+            text-align: center;
+            flex: 1;
+        }
+
+        .status p {
+            margin: 5px 0;
+        }
+
+        .status .circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #ccc;
+            display: inline-block;
+        }
+
+        .status .circle.active {
+            background-color: #007bff;
+        }
+
+        .payment-info {
+            margin-bottom: 20px;
+        }
+
+        .payment-info p {
+            margin: 5px 0;
+        }
+
+        .total {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .cancel-btn {
+            padding: 10px 20px;
+            background-color: #ff4500;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cancel-btn:hover {
+            background-color: #cc3700;
+        }
+        /* Review Button Styles */
+        .review-btn {
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .review-btn:hover {
+            background-color: #218838;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 20% auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Review Form Styles */
+        .review-form {
+            margin-top: 20px;
+        }
+
+        .review-form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .review-form input,
+        .review-form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .review-form button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .review-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Order History</h1>
+
+        <div class="order">
+            <div class="order-info">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Order ID: <%= obj._id %></p>
+            </div>
+            <div class="order-details">
+                <p>Purchased on: <%= newdate %></p>
+                <p>Status: <%= obj.orderStatus.toUpperCase() %></p>
+            </div>
+        </div>
+
+        <div class="products">
+            <% product.forEach((data, index) => { %>
+                <div class="product">
+                    <img src="/images/products/<%= data.image %>" alt="<%= data.name %>">
+                    <div class="product-info">
+                        <p><%= data.name %></p>
+                        <p>Price: ₹ <%= data.price %></p>
+                        <p>Quantity: <%= data.quantity %></p>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+
+        <div class="status">
+            <div>
+                <div class="circle <%= obj.orderStatus === 'Placed' ? 'active' : '' %>"></div>
+                <p>Placed</p>
+            </div>
+            <div>
+                <div class="circle <%= obj.orderStatus === 'Shipped' ? 'active' : '' %>|| <%= obj.orderStatus === 'Out for Delivery' ? 'active' : '' %>""></div>
+                <p>Shipped</p>
+            </div>
+            <div>
+                <div class="circle <%= obj.orderStatus === 'Delivered' ? 'active' : '' %>"></div>
+                <p>Delivered</p>
+            </div>
+        </div>
+
+        <div class="payment-info">
+            <p>Payment Method: <%= obj.paymentOption %></p>
+            <p>Total Amount: ₹ <%= obj.totalAmount %></p>
+        </div>
+
+        <div class="total">
+            Total Amount: ₹ <%= obj.totalAmount %>
+        </div>
+
+        <% if (obj.orderStatus === 'Placed'||obj.orderStatus === 'Shipped') { %>
+            <button class="cancel-btn" onclick="confirmCancellation('<%= obj._id %>')">Cancel Order</button>
+        <% } %>
+        <input type="hidden" id="statusInput" value="<%= obj.orderStatus %>" />
+
+        <% if(obj.orderStatus==="Delivered") { %>
+            <div class="ml-auto align-self-end">
+                <div>
+                    <% var hasReview = false; %>
+                    <% review.forEach(function(reviewItem) { %>
+                    <% if (reviewItem.productId.equals(obj.product._id)) { %>
+                    <% hasReview = true; %>
+                    <% } %>
+                    <% }); %>
+    
+                    <% if (hasReview) { %>
+                    <button type="button" class="review-btn btn btn-success btn-sm mt-2" data-toggle="modal"
+                        data-target="#editreviewModal" onclick="editreview('<%= obj.product._id %>','<%= obj._id %>')">Edit Review</button>
+                       <% } else { %>
+                         <button type="button" class="btn btn-success btn-sm mt-2" data-toggle="modal" onclick="getProductId('<%= obj.product._id %>','<%= obj._id %>')" data-target="#reviewModal">Leave a Review</button>
+                       <% } %>
+                       <% } %>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script src="/user/js/orderHistory.js"></script>
+</body>
+</html>

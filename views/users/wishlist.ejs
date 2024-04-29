@@ -109,36 +109,69 @@
 </head>
 <body>
 
-<h1 class="wishlist-header">My Wishlist</h1>
+    <h1 class="wishlist-header">My Wishlist</h1>
 
-<div class="wishlist-container">
-    <% if (wishlistData.length === 0) { %>
-        <div class="product-card">
-            <img src="/images/empty-wishlist-image.jpg" alt="Empty Wishlist Image">
-            <p class="empty-wishlist">Your wishlist is empty.</p>
-        </div>
-    <% } else { %>
-        <% wishlistData.productId.forEach(item => { %>
-            <div class="product-card">
-                <img src="/images/products/<%= item.images[0] %>" alt="<%= item.productName ? item.productName : 'Product Image' %>">
-                <div class="product-info">
-                    <h2><%= item.productName ? item.productName : 'Product Name' %></h2>
-                    <p>$<%= item.price ? item.price.toFixed(2) : 'Price' %></p>
-                    <button class="add-to-cart-btn" onclick="addToCart('<%= item._id %>')">Add to Cart</button>
-                </div>
-                <button class="delete-icon" onclick="removeFromWishlist('<%= item._id %>')"><i class="fa fa-trash" aria-hidden="true"></i></button>
+    <div class="wishlist-container">
+        <% if (wishlistData.length === 0) { %>
+            <div class="empty-wishlist-container">
+                <img src="/images/empty-wishlist-image.jpg" alt="Your Wishlist is Empty">
+                <p class="empty-wishlist">Your wishlist is empty.</p>
             </div>
-        <% }); %>
-    <% } %>
-</div>
-
+        <% } else { %>
+            <% wishlistData.productId.forEach(item => { %>
+                <div class="product-card">
+                    <img src="/images/products/<%= item.images[0] %>" alt="<%= item.productName ? item.productName : 'Product Image' %>">
+                    <div class="product-info">
+                        <h2><%= item.productName ? item.productName : 'Product Name' %></h2>
+                        <p>$<%= item.price ? item.price.toFixed(2) : 'Price' %></p>
+    
+                        <button onclick="addToCart('<%= item.id %>')"  class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                    <button class="delete-icon" onclick="removeFromWishlist('<%= item._id %>')"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                </div>
+            <% }); %>
+        <% } %>
+    </div>
+    
 <!-- Script to handle adding items to the cart -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-    function addToCart(productId) {
-        // Implement logic to add the product with productId to the cart
-        console.log('Adding product with ID:', productId);
-        // Add your logic here, such as sending a request to the server to add the product to the cart
+    function addToCart(id) {
+        console.log(id);
+        fetch('/cart/' + id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: id })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Item added to cart!',
+                text: data.message
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error adding item to cart. Please try again.'
+            });
+        });
     }
+
+    
+</script>
+<script>
+   
 
     function removeFromWishlist(productId) {
     // Implement logic to remove the product with productId from the wishlist

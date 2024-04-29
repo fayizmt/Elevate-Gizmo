@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <style>
+    /* Resetting default margin and padding */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .image img {
+      height: 150px;
+      width: 150px;
+      border-radius: 50%;
+      border: 3px solid #5c677d;
+    }
+
+    .image button {
+      margin-left: 20px;
+      padding: 10px 20px;
+      background-color: #5c677d;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .image button:hover {
+      background-color: #465169;
+    }
+
+    .mainpart {
+      display: flex;
+      gap: 20px;
+    }
+
+    .part {
+      flex: 1;
+    }
+
+    label {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .part3 {
+      flex: 2;
+      padding-left: 20px;
+      border-left: 1px solid #ccc;
+    }
+
+    .part3 p {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .part3 label {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .part3 input {
+      margin-bottom: 10px;
+    }
+
+    /* Adding read-only style */
+    .readonly {
+      background-color: #f4f4f4;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 768px) {
+      .mainpart {
+        flex-direction: column;
+      }
+
+      .image {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .image img {
+        margin-bottom: 10px;
+      }
+
+      .image button {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="image">
+      <img src="/images/userProfile/<%=proData.image %>" alt="Profile Image" />
+      <button onclick="window.location.href='/editprofile'">Edit Profile</button>
+    </div>
+    <div class="mainpart">
+      <div class="part">
+        <label for="name">Name</label>
+        <input type="text" value="<%= userData.name %>" readonly /> 
+        <label for="email">Email</label>
+        <input type="text" value="<%= userData.email %>" readonly />
+        <!-- Add more fields as needed -->
+      </div>
+      <div class="part">
+        <label for="mobile">Mobile Number</label>
+        <input type="text" value="<%= userData.mobile %>" readonly />
+        <label for="dob">DOB</label>
+        <input type="text" value="<%= proData.dob %>" readonly /> 
+      </div>
+      
+      <div class="part3">
+        <p>Address</p>
+        <div class="part3Head">
+          <div class="part3one">
+            <label for="houseName">House Name</label>
+            <input type="text" value="<%= proData.houseName %>" readonly /> 
+
+            <label for="streetName">Street Name</label>
+            <input type="text" value="<%=proData.streetName %>" readonly />
+
+            <label for="post">Post</label>
+            <input type="text" value="<%= proData.post %>" readonly /> 
+          </div>
+          <div class="part3two">
+            <label for="pincode">Pincode</label>
+            <input type="text" value="<%= proData.pincode %>" readonly /> 
+
+            <label for="district">District</label>
+            <input type="text" value="<%= proData.district %>" readonly />
+
+            <label for="state">State</label>
+            <input type="text" value="<%=proData.state %>" readonly /> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

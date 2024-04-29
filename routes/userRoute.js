@@ -3,11 +3,14 @@ const userRoute=express()
 const nocache = require('nocache')
 const session = require('express-session')
 const config = require('../config/config')
-const auth = require('../middileware/auth')
+const auth = require('../middileware/auth');
+const imageUploader = require("../config/multer");
 const userController = require("../controller/userController");
+const userprofileController = require("../controller/userProfileController")
 const wishlistController = require("../controller/wishlistController");
 const cartController = require("../controller/cartController")
-
+const orderController = require("../controller/orderController")
+const reviewController = require("../controller/reviewController");
 userRoute.use(session({secret:config.sessionSecret,
     resave: false, 
     saveUninitialized: false}));
@@ -39,6 +42,16 @@ userRoute.post("/login", userController.verifyLogin);
 userRoute.get("/home",auth.isLogin,userController.loadHome);
 userRoute.get("/product-detail/:id",userController.loadProductDetails);
 
+userRoute.get("/shop",auth.isLogin,userController.loadShop);
+userRoute.get("/search",userController.searchProduct);
+// userRoute.get("/searchAndSortProducts",userController.searchAndSortProducts);
+
+
+//profile
+userRoute.get("/profile",userprofileController.loadProfile)
+userRoute.get("/editProfile",userprofileController.completeProfile)
+userRoute.post("/editProfile",imageUploader.uploadUser.single("image"),userprofileController.updateProfile)
+
 //wishlist
 userRoute.get("/wishlist",wishlistController.loadWishlist);
 userRoute.post("/wishlist/:id",wishlistController.addToWishlist);
@@ -52,6 +65,31 @@ userRoute.post("/count-quantity",cartController.cartQuantity);
 userRoute.delete("/cart/:id",cartController.removeCartItem);
 userRoute.post("/cart",cartController.loadCart);
 
+// check coupon
+userRoute.post("/couponCheck",cartController.checkCoupon);
+
+
+userRoute.get("/checkout",orderController.loadCheckout);
+// userRoute.post("/checkout",orderController.addCheckoutDetails)
+userRoute.post("/checkout",orderController.placeOrder);
+
+//
+userRoute.post("/removecoupon",orderController.removeCoupon);
+
+
+//payment
+userRoute.get("/payment",orderController.loadPayment);
+userRoute.post("/paymentComplete",orderController.paymentComplete);
+
+userRoute.get("/orderComplete/:data",orderController.orderComplete);
+userRoute.get("/orderList",userController.loadOrder);
+userRoute.get("/orderHistory/:id",userController.orderHistory);
+
+userRoute.put('/cancelOrder/:id',userController.cancelOrder)
+
+userRoute.post('/submit-review',reviewController.addReview)
+userRoute.get('/editReview',reviewController.editReviewGet)
+userRoute.post('/submit-editreview',reviewController.updateReview)
 
 // Logout
 userRoute.get("/logout",auth.isLogin,userController.userLogout);

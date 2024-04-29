@@ -16,7 +16,6 @@ const createStorage = (folderName) => {
       const name = Date.now() + "-" + file.originalname;
       cb(null, name);
     },
-    
   });
 };
 
@@ -155,5 +154,5 @@ module.exports = {
   uploadProduct,
   productImgResize,
   userImgResize,
-  // uploadBanner,
+  uploadBanner,
 };

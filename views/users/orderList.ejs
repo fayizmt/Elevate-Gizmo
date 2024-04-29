@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElevateGizmo | Order History</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .part1 {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .part2 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .img img {
+            max-width: 100px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+        }
+
+        .circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin-right: 5px;
+        }
+
+        .stick {
+            width: 2px;
+            height: 15px;
+            background-color: #ccc;
+            margin: 0 7px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .else {
+            font-style: italic;
+            color: #888;
+        }
+
+        .active {
+            background-color: #70e000; /* Change color for active elements */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Order History</h1>
+        <% if(data==null){ %>
+        <p class="else">Your history is clean 😊</p>
+        <% }else{ %> <% data.forEach((data)=>{ %>
+        <div class="card">
+            <div class="part1">
+                <div class="id">#ID: <%= data._id %></div>
+                <div class="time">Purchased on: <%= data.createdAt %></div>
+                <input id="status" type="hidden" value="<%= data.orderStatus %>" />
+            </div>
+            <div class="part2">
+                <div class="img"><img src="" alt="" /></div>
+                <div class="status">
+                    <div class="part3">
+                        <div class="one">
+                            <div class="circle"></div>
+                            <div class="stick"></div>
+                        </div>
+                        <div class="two">
+                            <div class="circle"></div>
+                            <div class="stick"></div>
+                        </div>
+                        <div class="three">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                    <div class="part4">
+                        <p id="p1">Placed</p>
+                        <p id="p2">Shipped</p>
+                        <p id="p3">Delivered</p>
+                    </div>
+                </div>
+                <button onclick="window.location.href='/orderHistory/<%= data._id %>'">Details</button>
+            </div>
+        </div>
+        <% }) %> <%}%>
+    </div>
+    <script src="/user/js/orderList.js"></script>
+</body>
+</html>

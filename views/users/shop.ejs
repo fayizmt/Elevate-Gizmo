@@ -1,0 +1,426 @@
+<%-include ('../layouts/userHeader.ejs') %>
+
+<!-- Start Header Section -->
+<header>
+	<div class="header-top">
+    	<div class="container">
+        	<div class="row">
+            	<div class="col-md-6">
+                    <ul class="header_list text-md-left text-center">
+                        <li><a href="tel:+ 00 123 456 789"><i class="fa fa-phone"></i>+ 00 123 456 789</a></li>
+                        <li><a href="mailto:info@gmail.com"><i class="fa fa-envelope-o"></i>info@gmail.com</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="header_list text-md-right text-center">
+                        <li><a href="#test-popup1" class="open-popup-link">Login</a>
+                            <div id="test-popup1" class="white-popup lr-popup mfp-hide text-center">
+                                <button type="button" class="mfp-close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"><i class="ion-close-round"></i></span>
+                                </button>
+                                <h4>Login</h4>
+                                <form class="subscribe-popup-form" method="post" action="#">
+                                    <input name="email" required type="email" placeholder="Enter Your Email">
+                                    <input name="password" required type="password" placeholder="Enter Your Password">
+                                    <div class="form-check text-left">
+                                        <label>Remember me
+                                            <input class="defult-check" type="checkbox" checked="checked">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <a href="#" class="forgot-password float-right">Forgot Password ?</a>
+                                    </div>
+                                    <button class="btn btn-primary" title="Login" type="button">Login</button>
+                                </form>
+                                <h6>Don't have an account?</h6>
+                                <a href="#test-popup2" class="sign-up open-popup-link">Click here to Sign up</a>
+                            </div>	
+                            <div id="test-popup2" class="white-popup lr-popup mfp-hide">
+                                <button type="button" class="mfp-close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"><i class="ion-close-round"></i></span>
+                                </button>
+                                <h4>Registration</h4>
+                                <form class="subscribe-popup-form" method="post" action="#">
+                                    <input name="input" required type="input" placeholder="Enter Your name">
+                                    <input name="email" required type="email" placeholder="Enter Your Email">
+                                    <input name="password" required type="password" placeholder="Enter Your Password">
+                                    <input name="password" required type="password" placeholder="Confirmation Password">
+                                    <div class="form-check">
+                                        <label>I accept the terms and conditions
+                                            <input class="defult-check" type="checkbox" checked="checked">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <button class="btn btn-primary" title="Subscribe" type="button">Register</button>
+                                </form>
+                            </div>
+                        </li>
+                        <li><a href="#">Wishlist</a></li>
+                        <li><a href="#">My Account</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-mdl">
+    	<div class="container">
+        	<div class="row">
+            	<div class="col-md-12">
+                	<div class="hm-inner d-sm-flex align-items-center justify-content-between">
+                    	<div class="header-logo">
+                        	<a href="index.html"><img src="/user/image/logo.png" alt="logo"></a>
+                        </div>
+                      <div>
+                          <input class="search-box" placeholder="Search Product..." id="searchInput"  value="" type="search" onkeydown="handleSearchInput(event)">
+                      </div>
+                        
+                    	<div class="header-right">
+                        	<div class="header-cart">
+                            <a href="#">
+                                <div class="cart-icon">
+                                    <img src="user/image/cart-icon.png" alt="cart-icon">
+                                    <span><%=cartCount%></span>
+                                </div>
+                            </a>
+                           
+                    	</div>
+                        	<div class="d-lg-none mm_icon">
+                                <div class="form-captions" id="search">
+                                    <button type="submit" class="submit-btn-2"><i class="fa fa-search"></i></button>
+                                </div>
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+                        	</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-btm">
+   		<div class="container">
+        	<div class="row">
+            	<div class="col-md-12">
+                	<nav class="navbar navbar-expand-lg navbar-light">
+                    	<div class="header-logo">
+                        	<a href="#"><img src="image/logo.png" alt="logo"></a>
+                        </div>
+                      	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                	<a class="nav-link " href="home" >Home</a>
+                                    
+                                </li>
+                                <li class="nav-item">
+                                	<a class="nav-link" href="about-us.html">About us</a>
+                                </li>
+                                
+                                <li class="dropdown">
+                                	<a class="nav-link " href="shop" >Shop</a>
+                                   
+                                </li>
+                               
+                                <li class="nav-item">
+                                	<a class="nav-link" href="contact.html">Contact</a>
+                                </li>
+                            </ul>
+                      	</div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- End Header Section -->
+
+<!-- Start Breadcrumbs Section -->
+<section class="breadcrumbs-section background_bg" data-img-src="user/image/shop-breadcrumbs-img.jpg">
+	<div class="container">
+    	<div class="row">
+        	<div class="col-md-12">
+                <div class="page_title text-center">
+                	<h1>shop</h1>
+                    <ul class="breadcrumb justify-content-center">
+                    	<li><a href="/home">home</a></li>
+                        <li><span>shop</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Header Section -->
+
+
+  <!-- Start Shop Section -->
+  <section class="shop-inner-section pt_large pb_large">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-9 col-lg-8 col-md-12">
+          <!-- Products Section -->
+          <div class="shop-options d-sm-flex justify-content-between align-items-center">
+            <!-- Sorting Options -->
+            <div class="sorting-option">
+              <select class="sorting-items" name="category">
+                <!-- Sorting Options Content -->
+              </select>
+            </div>
+            <!-- Showing Items -->
+            <div class="showing-items">
+              <p>Showing 1–9 of 15 results</p>
+            </div>
+            <!-- Shop List/Grid View -->
+            <div class="shop-list_grid">
+              <!-- List/Grid View Buttons -->
+            </div>
+          </div>
+          <!-- Product List/Grid Container -->
+          <div class="row list_grid_container grid justify-content-center">
+            <% for (let i = 0; i < product.length; i++) { %>
+            <div class="col-md-4 col-6">
+              <div class="product-box common-cart-box box-1">
+                <div class="product-img common-cart-img">
+                  <img src="/images/products/<%= product[i].images[0] %>" alt="product-img">
+                  <div class="hover-option">
+                    <div class="add-cart-btn">
+                      <!-- Add to Cart Button -->
+                    </div>
+                    <ul class="hover-icon">
+                      <li>
+                        <button onclick="addToCart('<%= product[i].id %>')" class="addCart"><i class="fa fa-shopping-cart"></i></button>
+                      </li>
+                      <li>
+                        <button onclick="addToWishlist('<%= product[i].id %>')" class="addWishlist"><i class="fa fa-heart"></i></button>
+                      </li>
+                      <li>
+                        <button class="productButton" onclick="viewProduct('<%= product[i].id %>')"><i class="fa fa-eye"></i></button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="product-info common-cart-info text-center">
+                  <a href="product-detail" class="cart-name"><%= product[i].productName %></a>
+                  <p class="cart-price"><del><%= product[i].actualprice %></del><%= product[i].price %></p>
+                  <p class="product-list-text" style="">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                  <div class="hover-option">
+                    <div class="add-cart-btn">
+                      <a href="#" class="btn btn-primary">Add To Cart</a>
+                    </div>
+                    <ul class="hover-icon">
+                      <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                      <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                      <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% } %>
+          </div>
+          <!-- Pagination -->
+              <nav aria-label="Page navigation">
+                  <ul class="pagination justify-content-center">
+                    <% for (let page = 1; page <= totalPages; page++) { %>
+                        <li class="page-item<%= currentPage === page ? ' active' : '' %>">
+                            <a class="page-link" href="/shop?page=<%= page %>"><%= page %></a>
+                        </li>
+                    <% } %>
+                  <!-- Pagination Content -->
+              </nav>
+        </div>
+        <!-- Sidebar Filters -->
+        <div class="col-xl-3 col-lg-4 col-md-12 order-lg-first">
+          <!-- Sidebar Filters HTML -->
+          <div class="shop-sidebar">
+            <!-- Categories Filter -->
+            <div class="side-quantity-box side-box">
+              <div class="side-box-title">
+                <h6>Categories</h6>
+              </div>
+              <div class="quantity-box-detail">
+                <ul>
+                  <!-- Category List with Radio Buttons -->
+                  <li><label><input type="radio" name="category" value="662a20426005d88f6fd3a5f1">Samsung <span>(10)</span></label></li>
+                  <li><label><input type="radio" name="category" value="laptop">watches <span>(05)</span></label></li>
+                  <li><label><input type="radio" name="category" value="watch"> Footwear<span>(15)</span></label></li>
+                  <li><label><input type="radio" name="category" value="bags"> Bags And Backpacks<span>(20)</span></label></li>
+                  <li><label><input type="radio" name="category" value="accessories"> Accessories<span>(07)</span></label></li>
+                </ul>
+              </div>
+              
+              
+            </div>
+            <!-- Price Range Filter -->
+            <div class="side-filter-box side-box" id="filter">
+              <div class="side-box-title">
+                <h6>Filter</h6>
+              </div>
+              <div class="filter-box-detail">
+                <div id="slider-range"></div>
+                <div class="price_slider_amount">
+                  <div class="slider-values d-flex align-items-center">
+                    <p>Price</p>
+                    <!-- Replace select dropdown with radio buttons -->
+                    <input type="radio" id="lowToHigh" name="sort" value="low-to-high">
+                    <label for="lowToHigh">Low to High</label>
+                    <input type="radio" id="highToLow" name="sort" value="high-to-low">
+                    <label for="highToLow">High to Low</label>
+                    <!-- Updated button with onclick event -->
+                    <button id="applyFiltersBtn">Apply Filters</button>
+                  </div>
+                </div>
+              </div>
+              
+              
+
+            
+            <!-- Color Filter -->
+            
+            <!-- Recent Products -->
+            <div class="side-quantity-box side-box">
+              <div class="side-box-title">
+                <!-- <h6>Recent Products</h6> -->
+              </div>
+              <div class="side-recent-product">
+                <!-- Recent Products Content -->
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Shop Section -->
+
+
+
+
+
+<!-- Start Footer Section -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    function addToCart(id) {
+        console.log(id);
+        fetch('/cart/' + id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: id })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Item added to cart!',
+                text: data.message
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error adding item to cart. Please try again.'
+            });
+        });
+    }
+
+    
+</script>
+                                        
+<script>
+    const addWishlist = document.querySelector('.addWishlist');
+    
+    function addToWishlist(id) {
+        console.log(id);
+        
+        fetch('/wishlist/' + id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain' 
+            },
+            body: id 
+        })
+        .then(response => {
+            return response.json(); 
+        })
+        .then(data => {
+            
+            Swal.fire({
+                title: 'Item Added to Wishlist',
+                text: data.message,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error adding item to wishlist. Please try again.');
+        });
+    }
+    function viewProduct(productId) {
+  const productDetailUrl = `/product-detail/${productId}`;
+  window.location.href = productDetailUrl;
+}
+</script>
+<script>
+
+let preinputvalue = "";
+
+async function handleSearchInput(event) {
+  const partialInput = document.getElementById("searchInput").value;
+  console.log("Partial Input:", partialInput); // Log partial input value
+  if (event.key === "Enter") {
+    console.log("Enter key pressed. Redirecting...");
+    window.location.href = `/shop?search=${partialInput}`;
+  } else {
+    if (partialInput !== preinputvalue) {
+      console.log("Fetching autocomplete suggestions...");
+      try {
+        const response = await fetch(`/search?input=${partialInput}`);
+        const data = await response.json();
+        console.log("Autocomplete Suggestions:", data.suggestions); // Log autocomplete suggestions
+        displayAutocompleteSuggestions(data.suggestions);
+        preinputvalue = partialInput;
+      } catch (error) {
+        console.error("Error fetching autocomplete suggestions:", error);
+      }
+    }
+  }
+}
+
+document.getElementById("applyFiltersBtn").addEventListener("click", function () {
+  // Get selected category
+  const selectedCategory = document.querySelector('input[name="category"]:checked');
+  console.log(selectedCategory);
+  const categoryValue = selectedCategory ? selectedCategory.value : null;
+  // Get selected price filter
+  const selectedPriceFilter = document.querySelector('input[name="sort"]:checked');
+  const priceFilterValue = selectedPriceFilter ? selectedPriceFilter.value : null;
+  // Get product name filter value
+  // Construct filters object
+  const filters = {
+      category: categoryValue,
+      priceFilter: priceFilterValue,
+  };
+  // Construct query string
+  const queryString = Object.keys(filters)
+      .filter((key) => filters[key] !== null && filters[key] !== "")
+      .map((key) => `${key}=${encodeURIComponent(filters[key])}`)
+      .join("&");
+  // Construct URL
+  const url = `/shop?${queryString}`;
+  // Redirect user
+  window.location.href = url;
+});
+</script>
+
+
+
+<%-include ('../layouts/userFooter.ejs') %>
