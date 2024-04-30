@@ -34,33 +34,33 @@ userRoute.get("/forget",userController.forgetLoad)
 userRoute.post("/forget",userController.forgetVerify)
 
 // Login Routes
-userRoute.get("/",auth.isLogout, userController.loginLoad);
-userRoute.get("/login",auth.isLogout, userController.loginLoad);
+userRoute.get("/", userController.home);
+userRoute.get("/login", userController.loginLoad);
 userRoute.post("/login", userController.verifyLogin);
 
 //Home
 userRoute.get("/home",auth.isLogin,userController.loadHome);
 userRoute.get("/product-detail/:id",userController.loadProductDetails);
 
-userRoute.get("/shop",auth.isLogin,userController.loadShop);
+userRoute.get("/shop",userController.loadShop);
 userRoute.get("/search",userController.searchProduct);
 // userRoute.get("/searchAndSortProducts",userController.searchAndSortProducts);
 
 
 //profile
-userRoute.get("/profile",userprofileController.loadProfile)
-userRoute.get("/editProfile",userprofileController.completeProfile)
+userRoute.get("/profile",auth.isLogin,userprofileController.loadProfile)
+userRoute.get("/editProfile",auth.isLogin,userprofileController.completeProfile)
 userRoute.post("/editProfile",imageUploader.uploadUser.single("image"),userprofileController.updateProfile)
 
 //wishlist
-userRoute.get("/wishlist",wishlistController.loadWishlist);
+userRoute.get("/wishlist",auth.isLogin,wishlistController.loadWishlist);
 userRoute.post("/wishlist/:id",wishlistController.addToWishlist);
 userRoute.delete("/wishlist/:id",wishlistController.removeWishlistItem);
 
 //Cart
 
-userRoute.get("/cart",cartController.loadCart);
-userRoute.post("/cart/:id",cartController.addToCart);
+userRoute.get("/cart",auth.isLogin,cartController.loadCart);
+userRoute.post("/cart/:id",auth.isLogin,cartController.addToCart);
 userRoute.post("/count-quantity",cartController.cartQuantity);
 userRoute.delete("/cart/:id",cartController.removeCartItem);
 userRoute.post("/cart",cartController.loadCart);
@@ -82,7 +82,7 @@ userRoute.get("/payment",orderController.loadPayment);
 userRoute.post("/paymentComplete",orderController.paymentComplete);
 
 userRoute.get("/orderComplete/:data",orderController.orderComplete);
-userRoute.get("/orderList",userController.loadOrder);
+userRoute.get("/orderList",auth.isLogin,userController.loadOrder);
 userRoute.get("/orderHistory/:id",userController.orderHistory);
 
 userRoute.put('/cancelOrder/:id',userController.cancelOrder)

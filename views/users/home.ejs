@@ -127,6 +127,11 @@
                         </form>
                     	<div class="header-right header_list">
                             <ul class="d-inline-block">
+                                <li>
+                                    <a href="login" ><i class="ion-log-in"></i></a>
+                                    
+                                     
+                                </li>
                                 <li class="menu-item">
                                     <a href="" data-toggle="tooltip" data-placement="top" title="My Account">
                                         <i class="ion-person"></i>
@@ -1196,6 +1201,34 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
+//    document.addEventListener("DOMContentLoaded", function() {
+//     const form = document.querySelector(".subscribe-popup-form");
+
+//     form.addEventListener("submit", function(event) {
+//         event.preventDefault(); // Prevent default form submission
+
+//         const formData = new FormData(form); // Serialize form data
+
+//         fetch("/login", {
+//             method: "POST",
+//             body: formData
+//         })
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error(`HTTP error! Status: ${response.status}`);
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             console.log(data); // Handle server response data
+//         })
+//         .catch(error => {
+//             console.error("There was a problem with the fetch operation:", error);
+//         });
+//     });
+// });
+
+
     function addToCart(id) {
         console.log(id);
         fetch('/cart/' + id, {

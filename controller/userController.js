@@ -65,6 +65,23 @@ const sendResetPassword = async (name, email, token) => {
   }
 };
 
+const home = async (req, res) => {
+  try {
+      const productList = await productModel.find().populate('category');
+      const bannerList = await bannerModel.find();
+      let cartCount = 0
+      
+     
+
+      res.render("home", {
+          productList,
+          bannerList,
+          cartCount
+      });
+  } catch (error) {
+      console.log(error.message);
+  }
+};
 
  const loadRegistration = async (req, res) => {
     try {
@@ -524,6 +541,7 @@ const searchProduct = async (req, res) => {
   
   
 module.exports={
+  home,
   loginLoad,
   verifyLogin,
   loadRegistration,
