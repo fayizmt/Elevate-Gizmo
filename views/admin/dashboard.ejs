@@ -192,7 +192,7 @@
                         <script>
                             document.write(new Date().getFullYear());
                         </script>
-                        &copy; Nest - HTML Ecommerce Template .
+                        &copy; ElevateGizmo .
                     </div>
                     <div class="col-sm-6">
                         <div class="text-sm-end">All rights reserved</div>
@@ -200,6 +200,38 @@
                 </div>
             </footer>
         </main>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+        
+
+
+        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+
+        <script>
+        const xValues = ["Sunday","Monday", "tuesday", "wednesday", "Thurday", "Friday","Saturday"];
+        const yValues = [55, 49, 44, 24, 15];
+        const barColors = ["red", "green","blue","orange","brown"];
+
+        new Chart("myChart", {
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [{
+            backgroundColor: barColors,
+            data: yValues
+            }]
+        },
+        options: {
+            legend: {display: false},
+            title: {
+            display: true,
+            text: ""
+            }
+        }
+        });
+        
+        
+            </script>
         <script src="/admin/js/vendors/jquery-3.6.0.min.js"></script>
         <script src="/admin/js/vendors/bootstrap.bundle.min.js"></script>
         <script src="/admin/js/vendors/select2.min.js"></script>

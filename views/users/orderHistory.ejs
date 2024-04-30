@@ -70,11 +70,10 @@
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-bottom: 80px;
         }
 
         .product {
-            width: calc(33.33% - 20px);
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -150,7 +149,7 @@
             background-color: #cc3700;
         }
         /* Review Button Styles */
-        .review-btn {
+        /* .review-btn {
             padding: 8px 16px;
             background-color: #28a745;
             color: #fff;
@@ -161,10 +160,10 @@
 
         .review-btn:hover {
             background-color: #218838;
-        }
+        } */
 
         /* Modal Styles */
-        .modal {
+        /* .modal {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -198,10 +197,10 @@
             color: black;
             text-decoration: none;
             cursor: pointer;
-        }
+        } */
 
         /* Review Form Styles */
-        .review-form {
+        /* .review-form {
             margin-top: 20px;
         }
 
@@ -230,7 +229,7 @@
 
         .review-form button:hover {
             background-color: #0056b3;
-        }
+        } */
     </style>
 </head>
 <body>
@@ -250,7 +249,7 @@
 
         <div class="products">
             <% product.forEach((data, index) => { %>
-                <div class="product">
+                <div class="product" style="height: 150px;width: 150px;">
                     <img src="/images/products/<%= data.image %>" alt="<%= data.name %>">
                     <div class="product-info">
                         <p><%= data.name %></p>

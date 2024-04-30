@@ -18,50 +18,62 @@ const instance = new Razorpay({
 
 
 const loadCheckout = async (req, res) => {
- 
-    try {
-        const userId = req.session.user_id;
-        const userData = await userDb.findById(userId);
-        
-        const cartData = await cartDb.findOne({ userId }).populate("products.productId");
-        
-        let cartTotal = 0;
-        let total = 0;
-        let couponDiscount = 0;
+  try {
+      const userId = req.session.user_id;
+      const userData = await userDb.findById(userId);
+      let cartCount = 0;
+      const cartData = await cartDb.findOne({ userId }).populate("products.productId");
+      
+      if (cartData && cartData.products && cartData.products.length > 0) {
+          cartCount = cartData.products.length;
+          
+          let cartTotal = 0;
+          let total = 0;
+          let couponDiscount = 0;
+          
+          const totalWithoutDiscount = await cartDb.aggregate([
+              { $match: { userId: new ObjectId(userId) } },
+              { $unwind: "$products" },
+              { $project: { price: "$products.price", quantity: "$products.quantity" } },
+              { $group: { _id: null, total: { $sum: { $multiply: ["$quantity", "$price"] } } } }
+          ]);
 
-        if (cartData && cartData.products.length > 0) {
-            const totalWithoutDiscount = await cartDb.aggregate([
-                { $match: { userId: new ObjectId(userId) } },
-                { $unwind: "$products" },
-                { $project: { price: "$products.price", quantity: "$products.quantity" } },
-                { $group: { _id: null, total: { $sum: { $multiply: ["$quantity", "$price"] } } } }
-            ]);
+          if (totalWithoutDiscount.length > 0) {
+              cartTotal = totalWithoutDiscount[0].total;
 
-            if (totalWithoutDiscount.length > 0) {
-                cartTotal = totalWithoutDiscount[0].total;
+              const couponData = await couponDb.findOne({ "usedUsers": userId });
 
-                const couponData = await couponDb.findOne({ "usedUsers": userId });
-
-                if (couponData) {
-                    couponDiscount = couponData.maxDiscountAmount;
-                    total = cartTotal - couponDiscount;
-                } else {
-                    total = cartTotal;
-                }
-            }
-        }
-
-        res.render('checkout', {
-            cartTotal,
-            total,
-            couponDiscount,
-            cart: cartData
-        });
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).send("Internal Server Error");
-    }
+              if (couponData) {
+                  couponDiscount = couponData.maxDiscountAmount;
+                  total = cartTotal - couponDiscount;
+              } else {
+                  total = cartTotal;
+              }
+          }
+          
+          res.render('checkout', {
+              cartTotal,
+              total,
+              couponDiscount,
+              cart: cartData,
+              cartCount 
+          });
+      } else {
+          // Handle case where cartData or cartData.products is null or empty
+          res.render('checkout', {
+              cartTotal: 0,
+              total: 0,
+              couponDiscount: 0,
+              cart: null,
+              cartCount: 0 
+          });
+      }
+  } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Internal Server Error");
+  }
 }
+
 
 const placeOrder = async (req, res) => {
     try {

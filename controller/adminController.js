@@ -134,7 +134,7 @@ const verifyLogin = async (req,res) => {
             'orderDetails.product.productStatus': 'Delivered', 
             'orderDetails.createdAt': { 
               $gte: startOfMonth,
-              $lt: endOfMonth
+              $lt: endOfMonth 
             }
           }
         },
@@ -203,7 +203,7 @@ const verifyLogin = async (req,res) => {
             res.render('showorder', { order, productDetails });
           } catch (error) {
             console.log(error.message);
-          }
+          }  
         };
         
         const updateProductStatus = async (req, res) => {

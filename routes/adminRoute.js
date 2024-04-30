@@ -44,22 +44,22 @@ adminRoute.get('/users',adminController.loadUsers)
 
 
 //category
-adminRoute.get('/category',categoryController.loadCategory)
+adminRoute.get('/category',auth.isLogin,categoryController.loadCategory)
 //add Category
-adminRoute.get('/addcategory',categoryController.loadAddCategory)
+adminRoute.get('/addcategory',auth.isLogin,categoryController.loadAddCategory)
 adminRoute.post('/addcategory',imageUploader.uploadCategory.single("imagepath"),categoryController.addCategory)
 //edit Category
 adminRoute.get('/editcategory',categoryController.loadEditCategory)
 adminRoute.post('/editcategory',imageUploader.uploadCategory.single("imagepath"),categoryController.updateCategory)
 
 //product
-adminRoute.get('/product',productController.loadProduct)
+adminRoute.get('/product',auth.isLogin,productController.loadProduct)
 //add Product
-adminRoute.get('/addproduct',productController.loadAddProduct)
+adminRoute.get('/addproduct',auth.isLogin,productController.loadAddProduct)
 adminRoute.post('/addproduct', imageUploader.uploadProduct.array("imagepath", 15),
 imageUploader.productImgResize,productController.addProduct)
 // edit Product
-adminRoute.get('/editproduct',productController.loadEditProduct)
+adminRoute.get('/editproduct',auth.isLogin,productController.loadEditProduct)
 adminRoute.post('/editproduct', imageUploader.uploadProduct.array("images", 15),
 imageUploader.productImgResize,productController.updateProduct);
 
@@ -71,28 +71,28 @@ adminRoute.patch(
   productController.uploadImage);
 
 // Banner
-adminRoute.get('/banner',bannerController.loadBanner)
+adminRoute.get('/banner',auth.isLogin,bannerController.loadBanner)
 //add Banner
-adminRoute.get('/addbanner',bannerController.addBannerLoad)
+adminRoute.get('/addbanner',auth.isLogin,bannerController.addBannerLoad)
 adminRoute.post('/addbanner',imageUploader.uploadBanner.single("image"),bannerController.addBanner)
 //Edit Banner
-adminRoute.get('/editbanner',bannerController.editBannerLoad)
+adminRoute.get('/editbanner',auth.isLogin,bannerController.editBannerLoad)
 adminRoute.post('/editbanner',imageUploader.uploadBanner.single("image"),bannerController.updateBanner)
 
 //Coupon
-adminRoute.get('/coupon',couponController.loadcoupon)
+adminRoute.get('/coupon',auth.isLogin,couponController.loadcoupon)
 //add Coupon
-adminRoute.get('/addcoupon',couponController.addCouponLoad)
+adminRoute.get('/addcoupon',auth.isLogin,couponController.addCouponLoad)
 adminRoute.post('/addcoupon',couponController.addCoupon)
 //edit Coupon
-adminRoute.get('/editcoupon',couponController.editCouponLoad)
+adminRoute.get('/editcoupon',auth.isLogin,couponController.editCouponLoad)
 adminRoute.post('/editcoupon',couponController.updateCoupon)
 adminRoute.get("/deletecoupon",couponController.removeCoupon);
 
 
 //order
-adminRoute.get('/order',adminController.loadOrder)
-adminRoute.get('/showorder',adminController.loadShowOrder)
+adminRoute.get('/order',auth.isLogin,adminController.loadOrder)
+adminRoute.get('/showorder',auth.isLogin,adminController.loadShowOrder)
 adminRoute.post('/updateProductStatus',adminController.updateProductStatus)
 
 
