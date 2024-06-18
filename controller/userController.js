@@ -1,25 +1,24 @@
-// const User = require("../model/userModel");
+
 const signupModel = require("../model/signupModel");
 const productModel = require("../model/productModel");
 const categoryModel = require("../model/categoryModel");
 const bannerModel = require("../model/bannerModel");
 const checkoutModel = require("../model/checkoutModel");
 const cartModel = require("../model/cart");
-const Review=require('../model/reviewModel')
-const Wishlist = require("../model/wishlist")
+const Review=require('../model/reviewModel');
 const otpGenerator = require('otp-generator');
-const randomstring = require("randomstring")
-const config = require("../config/config")
+const randomstring = require("randomstring");
+const config = require("../config/config");
 const twilio = require('twilio');
 const otpVerify = require("../helpers/otpValidate");
 const bcrypt = require("bcrypt");
-const nodeMailer = require("nodemailer")
+const nodeMailer = require("nodemailer");
 
 
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authTocken =  process.env.TWILIO_AUTH_TOCKEN ;
+// const accountSid = process.env.TWILIO_ACCOUNT_SID;
+// const authTocken =  process.env.TWILIO_AUTH_TOCKEN ;
 
-const twilioClient = new twilio(accountSid,authTocken)
+// const twilioClient = new twilio(accountSid,authTocken)
 
 const securePassword = async(password) => {
   try {
@@ -51,7 +50,7 @@ const sendResetPassword = async (name, email, token) => {
       subject: "for reset password",
       html: `<p> Hii ${name}, please copy the link <a href="http://localhost:8083/forget-password?token=${token}"> reset your password </a>`
     };
-
+   
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.log(error.message);
@@ -83,6 +82,37 @@ const home = async (req, res) => {
   }
 };
 
+
+const loadContact = async (req,res) => {
+  res.render('contact')
+}
+
+const loadAboutUs = async (req,res) => {
+  res.render('about-us')
+}
+
+const transporter = nodeMailer.createTransport({
+  service:'gmail',
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
+  requireTLS: true,
+  auth: {
+        user: config.emailUser,
+        pass: config.emailPassword
+      }
+});
+
+const sendMailOtp = (email, otp) => {
+  const mailOptions = {
+    from: config.emailUser,
+    to: email,
+    subject: 'Your OTP Code',
+    text: `Your OTP code is ${otp}`
+  };
+
+  transporter.sendMail(mailOptions);
+}
  const loadRegistration = async (req, res) => {
     try {
      
@@ -136,7 +166,6 @@ const home = async (req, res) => {
           name: name,
           email: email,
           mobile: mobile,
-          // image: req.file.filename,
           password: hashedPassword,
           is_admin: 0,
           is_varified:0,
@@ -147,12 +176,9 @@ const home = async (req, res) => {
         const userData = await user.save();
       console.log(userData);
 
-      // await twilioClient.messages.create({
-      //   body: `this is testing otp  ${otp}`,
-      //   to: `+91 ${mobile}`,
-      //   from: process.env.TWILIO_PHONE_NUMBER,
-      // });
-      console.log('otp send to number');
+     sendMailOtp(email, otp);
+
+      console.log('otp send to email');
 
       res.render('otpVerification')
       }
@@ -177,11 +203,15 @@ const home = async (req, res) => {
     try {
         const { otp } = req.body;
 
+        if (!otp) {
+            return res.status(400).json({ success: false, msg: 'OTP is required' });
+        }
+
         const otpData = await signupModel.findOne({ otp: otp });
 
         if (!otpData) {
-            console.log('Invalid OTP or mobile number');
-            return res.status(400).json({ success: false, msg: 'Invalid OTP or mobile number' });
+            console.log('Invalid OTP');
+            return res.status(400).json({ success: false, msg: 'Invalid OTP' });
         }
 
         const isOtpExpired = await otpVerify(otpData.otpExpiration);
@@ -190,16 +220,19 @@ const home = async (req, res) => {
             return res.status(400).json({ success: false, msg: 'Your OTP has expired' });
         }
 
-       
-        await signupModel.updateOne({ otp: otp }, { $unset: { otp: "", otpExpiration: "" } });
+        await signupModel.updateOne({ _id: otpData._id }, { 
+            $set: { is_varified: '1' },
+            $unset: { otp: "", otpExpiration: "" }
+        });
 
         res.redirect("/login");
 
     } catch (error) {
         console.log(error.message);
-        res.status(500).json({ success: false, msg: error.message });
+        res.status(500).json({ success: false, msg: 'Internal server error' });
     }
 };
+
 
   const loginLoad = async (req, res) => {
     try {
@@ -221,11 +254,14 @@ const home = async (req, res) => {
       if (userData) {
         const passwordMatch = await bcrypt.compare(password, userData.password);
         if (passwordMatch) {
-          
+          if(userData.is_admin===0){
             req.session.user_id = userData._id; // Store id in session
             
             res.redirect('/home');
-          
+          }
+          else{
+            res.render('login', { message: 'email or password is incorrect' });
+          }
         } else {
           res.render('login', { message: 'email or password is incorrect' });
         }
@@ -242,10 +278,11 @@ const home = async (req, res) => {
     try {
         let userData;
         if (req.session.user_id) {
-            userData = await signupModel.findOne({ _id: req.session.user_id }); // Retrieve user by id
+            userData = await signupModel.findOne({ _id: req.session.user_id }); 
         }
 
-        const productList = await productModel.find().populate('category');
+        const productList= await productModel.find({ is_block: false }).populate('category');
+
         const bannerList = await bannerModel.find();
         let cartCount = 0; 
 
@@ -283,7 +320,11 @@ const home = async (req, res) => {
                 userId: userData._id,
             });
             if (checkData) {
-                const data = checkData.orderDetails; // Corrected typo here
+                const data = checkData.orderDetails;
+                // let proIds = [];
+                // for (let i of data.product) {
+                // const product = await productModel.findById(i.id);  
+                // }
                 res.render("orderList", { data });
             } else {
                 res.render("orderList", { data: null });
@@ -304,7 +345,7 @@ const orderHistory = async (req, res) => {
     const review = await Review.find({userId:req.session.user_id})
     const checkdata = await checkoutModel.findOne({ userId: user._id });
     const obj = checkdata.orderDetails.find((data) => data._id == id);
-
+   
     // Find product
 
     let product = [];
@@ -344,7 +385,7 @@ const cancelOrder = async (req, res) => {
     const checkData = await checkoutModel.findOneAndUpdate(
       { userId: user._id, "orderDetails._id": orderId },
       { $set: { "orderDetails.$.orderStatus": update, "orderDetails.$.product.$[].productStatus": update } },
-      { new: true } // Get the updated document after the update operation
+      { new: true } 
     );
 
     console.log(checkData);
@@ -364,6 +405,7 @@ const loadShop = async (req, res) => {
     const user_id = req.session.user_id;
     const searchQuery = req.query.search;
     let productQuery = productModel.find();
+    const category =await categoryModel.find();
 
     if (searchQuery) {
       productQuery = productQuery.where('productName').regex(new RegExp(searchQuery, 'i'));
@@ -403,6 +445,7 @@ const loadShop = async (req, res) => {
       }
     res.render('shop', { 
       product,
+      category,
       totalPages,
       currentPage,
       cartCount
@@ -437,6 +480,18 @@ const searchProduct = async (req, res) => {
       const { id } = req.params;
     const productDetail = await productModel.findById(id).populate('category')
     const relatedProducts = await productModel.find()
+    const reviewData = await Review.find({
+    productId:id
+    });
+    let reviews = [];
+    for (let i of reviewData) {
+      const user = await signupModel.findOne({
+        _id: i.userId
+      });
+      const username = user.name;
+      let obj = { username: username, content: i.reviewText, starcount: i.rating };
+      reviews.push(obj);
+    }
     let cartCount = 0; 
 
         if (userId) {
@@ -450,7 +505,14 @@ const searchProduct = async (req, res) => {
         } else {
             console.log('User data not found');
         }
-      res.render("product-detail",{productDetail,relatedProducts,cartCount})
+      res.render("product-detail",
+        {
+        productDetail,
+        relatedProducts,
+        cartCount,
+        reviews,
+        id
+      })
 
     } catch (error) {
       console.log(error.message);
@@ -530,7 +592,7 @@ const searchProduct = async (req, res) => {
         { $set: { password: hashedPassword, token: "" } }
       );
       console.log(updateData);
-      res.redirect("/");
+      res.redirect("/login");
     } catch (error) {
       console.log(error.message);
     }
@@ -542,6 +604,8 @@ const searchProduct = async (req, res) => {
   
 module.exports={
   home,
+  loadAboutUs,
+  loadContact,
   loginLoad,
   verifyLogin,
   loadRegistration,

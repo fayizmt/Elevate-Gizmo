@@ -70,17 +70,17 @@ const verifyLogin = async (req,res) => {
       if (userData) {
           const passwordMatch = await bcrypt.compare(password, userData.password);
           if (passwordMatch) {
-              if (userData.is_admin === 1) {
+              if (userData.is_admin === 1 && userData.is_varified==0) {
                  req.session.user_id = userData._id;
                   // Redirect to admin dashboard
                   return res.redirect('/admin/dashboard');
               } else {
                
-                return res.redirect('/admin');
+                return res.render('message:You are not admin');
               }
           } else {
               // Incorrect password
-              return res.redirect('/admin');
+              return res.render('message:invalid password');
           }
       } else {
           // User not found
@@ -193,12 +193,12 @@ const verifyLogin = async (req,res) => {
               { 'orderDetails.$': 1 }
             );
             
-            const order = orderDetails.orderDetails[0]; // Assuming there's only one order detail
+            const order = orderDetails.orderDetails[0]; 
             const productIds = order.product.map(product => product.id);
         
             const productDetails = await productModel.find({ _id: { $in: productIds } });
             
-            console.log(productDetails); // Check if productDetails contains the correct data
+            console.log(productDetails); 
             
             res.render('showorder', { order, productDetails });
           } catch (error) {

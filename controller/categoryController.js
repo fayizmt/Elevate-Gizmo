@@ -109,10 +109,30 @@ const loadCategory = async (req,res) => {
     }
   }
 
+ const categoryStatus = async (req, res) => {
+  try {
+    const categoryId = req.params.id;
+    const category = await categoryModel.findById(categoryId);
+
+    if (!category) {
+        return res.status(404).json({ message: 'Category not found' });
+    }
+
+    // Toggle the is_block status
+    category.is_block = !category.is_block;
+    await category.save();
+
+    res.json({ message: `Category ${category.is_block ? 'blocked' : 'unblocked'} successfully`, newStatus: category.is_block });
+} catch (error) {
+    console.error('Server error:', error);
+    res.status(500).json({ message: 'Server error', error });
+}
+}; 
 module.exports = {
    loadCategory,
    addCategory,
    loadAddCategory,
    loadEditCategory,
-   updateCategory
+   updateCategory,
+   categoryStatus
   }

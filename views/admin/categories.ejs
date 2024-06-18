@@ -113,29 +113,26 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                 <% for(let i = 0; i < categoryList.length; i++) { %>
+                                                <% for(let i = 0; i < categoryList.length; i++) { %>
                                                     <tr>
                                                         <td align="center"> <%=i+1 %> </td>
-                                                        <td align="center" class="p-3"> <%=categoryList[i].category %> &nbsp;
+                                                        <td align="center" class="p-3">
+                                                            <%=categoryList[i].category %> &nbsp;
                                                             <img class="rounded-circle" src="/images/category/<%= categoryList[i].imagepath %>" alt="<%= categoryList[i].imagepath %>" style="width: 30px; height: 30px;">
-                                                        </td>  
-                                                        
                                                         </td>
-                                                        <td align="center"><%=categoryList[i].description %>   </td>
+                                                        <td align="center"><%=categoryList[i].description %> </td>
                                                         <td align="center"><a href="/admin/editcategory?id=<%= categoryList[i]._id %>">edit</a></td>
                                                         <td align="center">
-                                                             
-                                                                <a class="unblock-user" data-user-id="<%=categoryList[i]._id %> "><span
-                                                                        class="badge rounded-pill alert-success">unblock</span></a>
-                                                                
-                                                                    <a class="block-user"
-                                                                        data-user-id="= <%=categoryList[i]._id %> "><span
-                                                                            class="badge rounded-pill alert-warning">block</span></a>
-                                                                     
+                                                            <a class="toggle-user-status" data-user-id="<%= categoryList[i]._id %>" data-status="<%= categoryList[i].is_block %>">
+                                                                <span class="badge rounded-pill alert-<%= categoryList[i].is_block ? 'warning' : 'success' %>">
+                                                                    <%= categoryList[i].is_block ? 'unblock' : 'block' %>
+                                                                </span>
+                                                            </a>
                                                         </td>
                                                     </tr>
-                                                 <%} %> 
+                                                <% } %> 
                                             </tbody>
+                                            
                                         </table>
                                     </div>
                                  <!-- } else { 
@@ -146,6 +143,39 @@
                     </div>
                 </div>
             </section>
-            
+            <script>
+                document.querySelectorAll('.toggle-user-status').forEach(button => {
+                    button.addEventListener('click', async (event) => {
+                        event.preventDefault(); 
+                
+                        const userId = event.currentTarget.getAttribute('data-user-id');
+                        const status = event.currentTarget.getAttribute('data-status') === 'true'; 
+                        const newStatus = !status;
+                
+                        try {
+                            const response = await fetch(`/admin/category/toggle-block/${userId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            });
+                
+                            const result = await response.json();
+                
+                            if (response.ok) {
+                                event.currentTarget.setAttribute('data-status', newStatus.toString());
+                                const badge = event.currentTarget.querySelector('.badge');
+                                badge.classList.toggle('alert-success', !newStatus);
+                                badge.classList.toggle('alert-warning', newStatus);
+                                badge.textContent = newStatus ? 'unblock' : 'block';
+                            } 
+                        } catch (error) {
+                            console.error('Error toggling category status:', error);
+                           
+                        }
+                    });
+                });
+                </script>
+                
             <!-- content-main end// -->
             <%-include ('../layouts/adminFooter.ejs') %>

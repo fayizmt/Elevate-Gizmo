@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Elevate Gizmo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .contact-container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .contact-header h1 {
+      font-size: 36px;
+      color: #5c677d;
+      margin: 0;
+    }
+
+    .contact-info, .contact-form {
+      margin-bottom: 20px;
+    }
+
+    .contact-info p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .contact-info a {
+      color: #5c677d;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-info a:hover {
+      color: #465169;
+    }
+
+    .contact-form h2 {
+      font-size: 28px;
+      color: #465169;
+      margin-bottom: 10px;
+    }
+
+    .contact-form label {
+      display: block;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .contact-form input[type="text"],
+    .contact-form input[type="email"],
+    .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .contact-form textarea {
+      height: 100px;
+      resize: vertical;
+    }
+
+    .contact-form button {
+      padding: 10px 20px;
+      background-color: #5c677d;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .contact-form button:hover {
+      background-color: #465169;
+    }
+  </style>
+</head>
+<body>
+  <div class="contact-container">
+    <div class="contact-header">
+      <h1>Contact Us</h1>
+    </div>
+    <div class="contact-info">
+      <p>If you have any questions, feel free to reach out to us. We're here to help!</p>
+      <p><strong>Phone:</strong> <a href="tel:+918089401380">+91 8089401380</a></p>
+      <p><strong>Email:</strong> <a href="mailto:fayizmt5@gmail.com">fayizmt5@gmail.com</a></p>
+    </div>
+    <div class="contact-form">
+      <h2>Send Us a Message</h2>
+      <form action="/submitContactForm" method="POST">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" required></textarea>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

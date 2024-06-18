@@ -3,93 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/user/image/loader_logo.png">
   <title>Edit Profile</title>
   <style>
     body {
-  font-family: Arial, sans-serif;
-  background-color: #f8f8f8;
-}
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+    }
 
-.container {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-h1, h2 {
-  color: #333;
-  margin-bottom: 10px;
-}
+    h1, h2 {
+      color: #333;
+      margin-bottom: 10px;
+    }
 
-.profile-info {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
+    .profile-info {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
 
-.profile-image img {
-  border-radius: 50%;
-  border: 3px solid #5c677d;
-}
+    .profile-image img {
+      border-radius: 50%;
+      border: 3px solid #5c677d;
+    }
 
-.profile-details {
-  flex: 1;
-}
+    .profile-details {
+      flex: 1;
+    }
 
-label {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #333;
-}
+    label {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
+    }
 
-input[type="text"],
-input[type="email"],
-input[type="date"] {
-  width: 100%;
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
-}
+    input[type="text"],
+    input[type="email"],
+    input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
 
-button {
-  padding: 10px 20px;
-  background-color: #5c677d;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+    button {
+      padding: 10px 20px;
+      background-color: #5c677d;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
 
-button:hover {
-  background-color: #465169;
-}
+    button:hover {
+      background-color: #465169;
+    }
 
-.upload-btn {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 8px 16px;
-  background-color: #5c677d;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+    .upload-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 16px;
+      background-color: #5c677d;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
 
-.upload-btn:hover {
-  background-color: #465169;
-}
+    .upload-btn:hover {
+      background-color: #465169;
+    }
 
-#profileImage {
-  display: none;
-}
-
+    #profileImage {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -98,36 +98,36 @@ button:hover {
     <form action="/editProfile" method="POST" enctype="multipart/form-data">
       <div class="profile-info">
         <div class="profile-image">
-          <img id="profileImg" src="" alt="Profile Image" width="150" height="150">
+          <img id="profileImg" src="<%= proData ? proData.profileImage : '' %>" alt="Profile Image" width="150" height="150">
           <input type="file" id="profileImage" accept="image/*">
           <label for="profileImage" class="upload-btn">Upload Image</label>
         </div>
         <div class="profile-details">
           <label for="name">Name</label>
-          <input type="text" name="name" value="<%= userData.name||proData.name %>">
+          <input type="text" name="name" value="<%= userData.name || proData.name || '' %>">
           <label for="email">Email</label>
-          <input type="email" name="email" value="<%= userData.email||proData.email %>">
+          <input type="email" name="email" value="<%= userData.email || proData.email || '' %>">
           <label for="mobile">Mobile Number</label>
-          <input type="text" name="mobile" value="<%= userData.mobile||proData.mobile %>">
+          <input type="text" name="mobile" value="<%= userData.mobile || proData.mobile || '' %>">
           <label for="dob">Date of Birth</label>
-          <input type="date" name="dob" value="<%=proData.dob%>">
+          <input type="date" name="dob" value="<%= proData ? proData.dob : '' %>">
         </div>
       </div>
       <div class="address-info">
         <h2>Address</h2>
         <div class="address-fields">
           <label for="houseName">House Name</label>
-          <input type="text" name="houseName" value="<%=proData.houseName%>">
+          <input type="text" name="houseName" value="<%= proData ? proData.houseName : '' %>">
           <label for="streetName">Street Name</label>
-          <input type="text" name="streetName" value="<%=proData.streetName%>">
+          <input type="text" name="streetName" value="<%= proData ? proData.streetName : '' %>">
           <label for="post">Post</label>
-          <input type="text" name="post" value="<%=proData.post%>">
+          <input type="text" name="post" value="<%= proData ? proData.post : '' %>">
           <label for="pincode">Pincode</label>
-          <input type="text" name="pincode" value="<%=proData.pincode%>">
+          <input type="text" name="pincode" value="<%= proData ? proData.pincode : '' %>">
           <label for="district">District</label>
-          <input type="text" name="district" value="<%=proData.district%>">
+          <input type="text" name="district" value="<%= proData ? proData.district : '' %>">
           <label for="state">State</label>
-          <input type="text" name="state" value="<%=proData.state%>">
+          <input type="text" name="state" value="<%= proData ? proData.state : '' %>">
         </div>
       </div>
       <button type="submit">Save Changes</button>
@@ -135,19 +135,18 @@ button:hover {
   </div>
   <script>
     const profileImageInput = document.getElementById('profileImage');
-const profileImg = document.getElementById('profileImg');
+    const profileImg = document.getElementById('profileImg');
 
-profileImageInput.addEventListener('change', function() {
-  const file = this.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      profileImg.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-});
-
+    profileImageInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          profileImg.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
   </script>
 </body>
 </html>

@@ -6,7 +6,7 @@
 <!-- End Header Section -->
 
 <!-- Start Breadcrumbs Section -->
-<section class="breadcrumbs-section background_bg" data-img-src="user/image/shop.jpeg">
+<!-- <section class="breadcrumbs-section background_bg" data-img-src="user/image/shop.jpeg"> -->
 	<div class="container">
     	<div class="row">
         	<div class="col-md-12">
@@ -51,7 +51,7 @@
             <% for (let i = 0; i < product.length; i++) { %>
             <div class="col-md-4 col-6">
               <div class="product-box common-cart-box box-1">
-                <div class="product-img common-cart-img home-img">
+                <div class="product-img common-cart-img ">
                   <img src="/images/products/<%= product[i].images[0] %>" alt="product-img">
                   <div class="hover-option">
                     <div class="add-cart-btn">
@@ -112,12 +112,16 @@
               <div class="quantity-box-detail">
                 <ul>
                   <!-- Category List with Radio Buttons -->
-                  <li><label><input type="radio" name="category" value="662a20426005d88f6fd3a5f1">Samsung <span>(10)</span></label></li>
-                  <li><label><input type="radio" name="category" value="662cc4afa77b336611414882">watches <span>(05)</span></label></li>
-                  <li><label><input type="radio" name="category" value="662cc505a77b336611414886"> Laptop<span>(15)</span></label></li>
-                  <li><label><input type="radio" name="category" value="662cc6b0a77b33661141488a"> Headphones<span>(20)</span></label></li>
-                  <li><label><input type="radio" name="category" value="662cc7f9b2afd3a103d09172"> Monitors<span>(07)</span></label></li>
+                  <% category.forEach(categoryItem => { %>
+                    <li>
+                      <label>
+                        <input type="radio" id="<%= categoryItem._id %>" name="category" value="<%= categoryItem._id %>">
+                        <%= categoryItem.category %><span></span>
+                      </label>
+                    </li>
+                  <% }) %>
                 </ul>
+                
               </div>
               
               

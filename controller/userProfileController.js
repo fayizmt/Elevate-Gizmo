@@ -1,20 +1,18 @@
 const signupModel = require("../model/signupModel");
 const profile = require("../model/userProfile");
 
-
-// get user profile
 const loadProfile = async (req, res) => {
   try {
     if (req.session.user_id) {
-      const id = req.session.user_id;
-      const userData = await signupModel.findOne({ _id: id });
+      const userId = req.session.user_id;
+      const userData = await signupModel.findOne({ _id: userId });
       if (!userData) {
         res.redirect("/login");
         return;
       }
-      const proData = await profile.findOne({id:id})
-      console.log("h1",proData);
-      res.render("profile", {userData,proData });
+      const proData = await profile.findOne({ id: userId }); 
+      // console.log("h1", proData);
+      res.render("profile", { userData, proData });
     } else {
       res.redirect("/login");
     }
@@ -24,7 +22,6 @@ const loadProfile = async (req, res) => {
   }
 };
 
-// edit or complete profile get page
 const completeProfile = async (req, res) => {
   try {
     if (req.session.user_id) {
@@ -47,12 +44,6 @@ const completeProfile = async (req, res) => {
 };
 
 
-
-
-// // using multer for file upload
-// const multer1 = upload.upload2.single("image");
-
-// create or update profile data
 const updateProfile = async (req, res) => {
   try {
     if (req.session.user_id) {
@@ -76,10 +67,10 @@ const updateProfile = async (req, res) => {
         state,
       } = req.body;
 
-      let image = ""; // Initialize image variable
+      let image = ""; 
 
       if (req.file) {
-        // Assuming the file is uploaded and saved correctly
+      
         image = req.file.filename;
       }
 

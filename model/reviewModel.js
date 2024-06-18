@@ -4,7 +4,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const reviewSchema = mongoose.Schema({
     productId: {
         type: ObjectId,
-        ref: "product",
+        ref: "Product",
         required: true
     },
     userId: {
@@ -16,7 +16,7 @@ const reviewSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
-    comment: {
+    reviewText: {
         type: String
     },
     createdAt: {

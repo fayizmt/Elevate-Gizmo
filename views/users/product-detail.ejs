@@ -14,7 +14,7 @@
                 	<h1><%=productDetail.productName%> Detail</h1>
                     <ul class="breadcrumb justify-content-center">
                     	<li><a href="home">home</a></li>
-                        <li><a href="#">Shop</a></li>
+                        <li><a href="shop">Shop</a></li>
                         <li><span><%=productDetail.productName%> </span></li>
                     </ul>
                 </div>
@@ -81,54 +81,104 @@
 </section>
 <!-- End Product Detail Section -->
 
-
-
-<!-- Start Related Product Section -->
-<section class="related-product pb_large">
+<!-- Start Product Tabs Section -->
+<section class="products-detail-tabs">
 	<div class="container">
     	<div class="row">
         	<div class="col-md-12">
-            	<div class="title">
-                	<h4>RELATED PRODUCTS</h4>
-                </div> 
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="products-slider4 same-nav owl-carousel owl-theme" data-margin="30" data-dots="false">
-                    <% for (let i = 0; i < relatedProducts.length; i++) { %>
-                        <% const relatedProduct = relatedProducts[i]; %>
-                        <% if (productDetail.category === relatedProduct.category) { %>
-                            <div class="item">
-                                <div class="product-box common-cart-box">
-                                    <div class="product-img common-cart-img">
-                                        <img src="/images/products/<%= relatedProduct.images[0] %>" alt="product-img">
-                                        <div class="hover-option">
-                                            <div class="add-cart-btn">
-                                                <a href="#" class="btn btn-primary">Add To Cart</a>
-                                            </div>
-                                            <ul class="hover-icon">
-                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                                <li><a href="#test-popup3" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-refresh"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product-info common-cart-info text-center">
-                                        <a href="product-detail.html?id=<%= relatedProduct._id %>" class="cart-name"><%= relatedProduct.productName %></a>
-                                        <p class="cart-price"><del><%= relatedProduct.actualPrice %></del> <%= relatedProduct.price %></p>
-                                    </div>
+            	<div class="products-tabs">
+                	<ul class="nav nav-tabs" id="myTab" role="tablist">
+    
+                        <li class="nav-item">
+                        	<a class="nav-link" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">REVIEWS (2)</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade tab-1 show active" id="discription" role="tabpanel" aria-labelledby="discription-tab">
+                        	<div class="tab-title">
+                            	<h6>Discription</h6>
+                            </div>
+                            <div class="tab-caption">
+                            	<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade tab-2" id="ai" role="tabpanel" aria-labelledby="ai-tab">
+                        	<div class="tab-title">
+                            	<h6>Additional information</h6>
+                            </div>
+                            <div class="tab-caption">
+                            	<div class="table-responsive">
+                            		<table class="table">
+                                    	<tbody>
+                                           
+                                    	</tbody>
+                                	</table>
                                 </div>
                             </div>
-                        <% } %>
-                    <% } %>
+                        </div>
+                        <div class="tab-pane fade tab-3" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                            <div class="tab-title">
+                                <h6>Customer Reviews</h6>
+                            </div>
+                            <div class="tab-caption">
+                                <div class="customer-reviews" id="customerReviews">
+                                    <div class="tab-caption">
+                                        <div class="costomer-reviews">
+                                            <% reviews.forEach(review => { %>
+                                            <div class="costomer-reviews-box">
+                                                <div class="reviews-img">
+                                                    <img src="/user/image/costomer-img.jpg" alt="costomer-img">
+                                                </div>
+                                                <div class="reviews-text">
+                                                    <p class="reviewer-name"><%=review.username%></p>
+                                                    <span class="reviews-date">
+                                                        <% const rating = review.starcount; %>
+                                                        <% for (let i = 0; i < rating; i++) { %>
+                                                          <i class="rating fas fa-star"></i> 
+                                                        <% } %>
+                                                      </span>
+                                                    <p class="reviewer-text"><%=review.content%></p>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                </div>
+                            </div>
+                            <div class="tab-caption">
+                                <div class="add-review">
+                                    <div class="tab-title">
+                                        <h6>Add a review</h6>
+                                    </div>
+                                    <form class="add-review-form">
+                                        <div class="input-1">
+                                            <div class="stars-container">
+                                                <i class="star far fa-star" data-rating="1"></i>
+                                                <i class="star far fa-star" data-rating="2"></i>
+                                                <i class="star far fa-star" data-rating="3"></i>
+                                                <i class="star far fa-star" data-rating="4"></i>
+                                                <i class="star far fa-star" data-rating="5"></i>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="input-3">
+                                            <textarea required rows="6" class="form-control textArea" id="reviewText" placeholder="Enter Your Review"></textarea>
+                                        </div>
+                                       <div><input type="hidden" id="productId" value="<%= id %>"></div>
+                                        <div class="input-btn">
+                                            <button type="button" class="btn btn-secondary" onclick="submitReview()">Submit</button>
+                                        </div>
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         </div>
-        
     </div>
 </section>
-<!-- End Related Product Section -->
+<!-- End Product Tabs Section -->
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
@@ -197,6 +247,117 @@
             alert('Error adding item to wishlist. Please try again.');
         });
     }
+    //review
+    document.addEventListener('DOMContentLoaded', function () {
+    const stars = document.querySelectorAll('.star');
+    const reviewText = document.getElementById('reviewText');
+    const submitBtn = document.querySelector('.submit-btn');
+
+    let selectedRating = 0;
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const rating = parseInt(star.getAttribute('data-rating'));
+            selectedRating = rating;
+            highlightStars(rating);
+        });
+    });
+
+    submitBtn.addEventListener('click', () => {
+        const review = reviewText.value.trim();
+        if (selectedRating > 0 && review !== '') {
+            
+            console.log('Rating:', selectedRating);
+            console.log('Review:', review);
+            // Close the popup or perform any other action here
+            closePopup();
+        } else {
+            alert('Please select a rating and write your review.');
+        }
+    });
+
+    function highlightStars(rating) {
+        stars.forEach(star => {
+            const starRating = parseInt(star.getAttribute('data-rating'));
+            if (starRating <= rating) {
+                star.classList.add('active');
+            } else {
+                star.classList.remove('active');
+            }
+        });
+    }
+
+    function closePopup() {
+        const popupContainer = document.querySelector('.popup-container');
+        popupContainer.style.display = 'none';
+    }
+
+    const closeBtn = document.querySelector('.close-btn');
+    closeBtn.addEventListener('click', closePopup);
+});
+
+//submit review form
+function submitReview() {
+    const reviewText = document.getElementById('reviewText').value;
+    const productId = document.getElementById('productId').value;
+    const rating = getSelectedRating();
+
+    const url = '/addReview'; // Update the URL to just the endpoint
+
+    // Construct the request body
+    const requestBody = {
+        reviewText: encodeURIComponent(reviewText),
+        productId: encodeURIComponent(productId),
+        rating: encodeURIComponent(rating)
+    };
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Specify JSON content type
+        },
+        body: JSON.stringify(requestBody) // Convert the body to JSON format
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error('Network response was not ok.');
+    })
+    .then(data => {
+        console.log('Review submitted:', data);
+        // Optionally, update the UI or show a success message
+    })
+    .catch(error => {
+        console.error('Error submitting review:', error);
+        // Optionally, show an error message to the user
+    });
+}
+
+
+function getSelectedRating() {
+    const stars = document.querySelectorAll('.star');
+    let selectedRating = 0;
+
+    stars.forEach(star => {
+        if (star.classList.contains('active')) {
+            selectedRating = parseInt(star.getAttribute('data-rating'));
+        }
+    });
+
+    return selectedRating;
+}
+
+// Add click event listeners to stars for rating selection
+const stars = document.querySelectorAll('.star');
+stars.forEach(star => {
+    star.addEventListener('click', () => {
+        stars.forEach(s => s.classList.remove('active'));
+        star.classList.add('active');
+    });
+});
+
+
 </script>
 
 

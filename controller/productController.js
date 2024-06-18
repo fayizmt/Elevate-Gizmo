@@ -112,7 +112,6 @@ const updateProduct = async (req, res) => {
         actualPrice: actualPrice,
         // brand: brand,
         quantity: quantity,
-        is_block: req.body.is_block,
         images: images,
       };
   
@@ -123,13 +122,11 @@ const updateProduct = async (req, res) => {
   
       console.log("Update Object:", updateObject);
   
-      // Find the document first
       const product = await productModel.findById(id);
   
       // Update the document with the new values
       Object.assign(product, updateObject);
   
-      // Save the document
       const updatedProduct = await product.save();
   
       console.log("Updated Product Data:", updatedProduct);
@@ -149,8 +146,7 @@ const updateProduct = async (req, res) => {
     try {
       const productId = req.query.productId;
       const imageIndex = req.query.imageIndex;
-  
-      // Check if productId is a valid MongoDB ObjectId
+
       if (!mongoose.Types.ObjectId.isValid(productId)) {
         return res.status(400).json({ error: "Invalid product ID" });
       }
@@ -159,11 +155,9 @@ const updateProduct = async (req, res) => {
       if (!product || imageIndex < 0 || imageIndex >= product.images.length) {
         return res.status(404).json({ error: "Invalid product or image index" });
       }
-  
-      // Remove the image at the specified index
+
       product.images.splice(imageIndex, 1);
-  
-      // Save the updated product
+
       await product.save();
   
       res.json({ success: true, message: "Image removed successfully" });
@@ -186,12 +180,9 @@ const uploadImage = async (req, res) => {
       return res.status(404).json({ error: "Product not found" });
     }
 
-    // Assuming you have an array of images in your product model
+    // Assuming array of images in product model
     const images = req.files.map((file) => file.filename);
-
-    // Check if the number of images exceeds the limit (e.g., 10)
     if (product.images.length + images.length > 10) {
-      // Send a success response with the message
       return res.json({
         success: true,
         message: "Maximum 10 images allowed",
@@ -199,13 +190,10 @@ const uploadImage = async (req, res) => {
       });
     }
 
-    // Add the new filenames to the coverPic array
+    // Add the new filenames 
     product.images = product.images.concat(images);
-
-    // Save the updated product
     const updatedProduct = await product.save();
 
-    // Send a success response with the updated product information
     res.json({
       success: true,
       message: "Image(s) uploaded successfully",
@@ -217,6 +205,18 @@ const uploadImage = async (req, res) => {
   }
 };
 
+const productStatus = async (req, res) => {
+  try {
+      const { productId, action } = req.body;
+      const is_block = action === 'block';
+
+      await productModel.findByIdAndUpdate(productId, { is_block });
+      res.json({ success: true });
+  } catch (error) {
+      console.error('Error updating product status:', error);
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+};
 module.exports = {
     loadProduct,
     loadAddProduct,
@@ -224,5 +224,6 @@ module.exports = {
     loadEditProduct,
     updateProduct,
     removeImage,
-    uploadImage
+    uploadImage,
+    productStatus
 }

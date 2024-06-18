@@ -40,11 +40,14 @@ userRoute.post("/login", userController.verifyLogin);
 
 //Home
 userRoute.get("/home",auth.isLogin,userController.loadHome);
+userRoute.get("/contact",userController.loadContact);
+userRoute.get("/about-us",userController.loadAboutUs);
+
 userRoute.get("/product-detail/:id",userController.loadProductDetails);
 
 userRoute.get("/shop",userController.loadShop);
 userRoute.get("/search",userController.searchProduct);
-// userRoute.get("/searchAndSortProducts",userController.searchAndSortProducts);
+
 
 
 //profile
@@ -87,7 +90,7 @@ userRoute.get("/orderHistory/:id",userController.orderHistory);
 
 userRoute.put('/cancelOrder/:id',userController.cancelOrder)
 
-userRoute.post('/submit-review',reviewController.addReview)
+userRoute.post('/addReview',reviewController.addReview)
 userRoute.get('/editReview',reviewController.editReviewGet)
 userRoute.post('/submit-editreview',reviewController.updateReview)
 

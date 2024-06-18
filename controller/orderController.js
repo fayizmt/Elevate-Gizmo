@@ -3,6 +3,7 @@ const ObjectId = mongoose.Types.ObjectId
 const userDb = require("../model/signupModel");
 const cartDb = require("../model/cart");
 const productDb = require("../model/productModel");
+const profile = require("../model/userProfile")
 const couponDb = require("../model/couponModel");
 const checkoutDb = require("../model/checkoutModel");
 const Razorpay = require("razorpay");
@@ -21,6 +22,7 @@ const loadCheckout = async (req, res) => {
   try {
       const userId = req.session.user_id;
       const userData = await userDb.findById(userId);
+      const profileData = await profile.findOne({id:userId})
       let cartCount = 0;
       const cartData = await cartDb.findOne({ userId }).populate("products.productId");
       
@@ -56,16 +58,17 @@ const loadCheckout = async (req, res) => {
               total,
               couponDiscount,
               cart: cartData,
-              cartCount 
+              cartCount,
+              profileData 
           });
       } else {
-          // Handle case where cartData or cartData.products is null or empty
           res.render('checkout', {
               cartTotal: 0,
               total: 0,
               couponDiscount: 0,
               cart: null,
-              cartCount: 0 
+              cartCount: 0 ,
+              profileData
           });
       }
   } catch (error) {
@@ -236,20 +239,19 @@ const loadPayment = async (req, res) => {
 
 
 const orderComplete = async (req, res) => {
-  // console.log("hkjhgdsfkjgsdl");
+
   if (req.session.user_id) {
     const method = req.params.data;
     const userData = await userDb.findOne({
       _id: req.session.user_id,
     });
-    // console.log("dfjhksjhksjh2");
     const checkData = await checkoutDb.findOne({
       userId: userData._id,
     });
     let proIds = [];
 
     const cartData = await cartDb.findOne({ userId: userData._id }).populate("products.productId");
-    // console.log("dfjhksjhksjh3");
+   
     if (cartData && cartData.products) {
       cartData.products.forEach((data) => {
         let obj = {
@@ -264,7 +266,6 @@ const orderComplete = async (req, res) => {
     }
     
     if (checkData && checkData.orderDetails && checkData.orderDetails.length > 0) {
-      // console.log("dfjhksjhksjh4");
       const lastOrder = checkData.orderDetails.length - 1;
       const lastorderObj = checkData.orderDetails[lastOrder];
       const deleteCart = await cartDb.findOneAndDelete({

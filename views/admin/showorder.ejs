@@ -196,7 +196,7 @@
                                                         </dl>
                                                         <dl class="dlist">
                                                             <dt class="text-muted">Status:</dt>
-                                                            <% if (order.paymentOption === "upi") { %>
+                                                            <% if (order.paymentOption === "upi" || (order.paymentOption === "cashOnDelivery" && order.productStatus === "Delivered")) { %>
                                                                 <dd>
                                                                     <span class="badge rounded-pill alert-success text-success">Payment done</span>
                                                                 </dd>
@@ -206,6 +206,7 @@
                                                                 </dd>
                                                             <% } %>
                                                         </dl>
+                                                        
                                                     </article>
                                                 </td>
                                             </tr>

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ElevateGizmo | Order History</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/user/image/loader_logo.png">
+    <title>Order History</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
     <style>
@@ -66,28 +67,60 @@
             margin: 5px 0;
         }
 
+        .order-address {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .address-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .address-details {
+            margin-left: 20px;
+        }
+
+        .address-line {
+            margin-bottom: 5px;
+        }
+
         .products {
             display: flex;
+            flex-direction: column;
             gap: 20px;
-            flex-wrap: wrap;
             margin-bottom: 80px;
         }
 
         .product {
             background-color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             padding: 10px;
         }
 
         .product img {
-            max-width: 100%;
+            max-width: 100px;
             height: auto;
             border-radius: 5px;
         }
 
+        .product-details {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-grow: 1;
+        }
+
         .product-info {
-            margin-top: 10px;
+            flex-grow: 1;
         }
 
         .product-info p {
@@ -148,88 +181,6 @@
         .cancel-btn:hover {
             background-color: #cc3700;
         }
-        /* Review Button Styles */
-        /* .review-btn {
-            padding: 8px 16px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .review-btn:hover {
-            background-color: #218838;
-        } */
-
-        /* Modal Styles */
-        /* .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal-content {
-            background-color: #fff;
-            margin: 20% auto;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-        }
-
-        .close-btn {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close-btn:hover,
-        .close-btn:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        } */
-
-        /* Review Form Styles */
-        /* .review-form {
-            margin-top: 20px;
-        }
-
-        .review-form label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .review-form input,
-        .review-form textarea {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        .review-form button {
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .review-form button:hover {
-            background-color: #0056b3;
-        } */
     </style>
 </head>
 <body>
@@ -245,16 +196,26 @@
                 <p>Purchased on: <%= newdate %></p>
                 <p>Status: <%= obj.orderStatus.toUpperCase() %></p>
             </div>
+            <div class="order-address">
+                <div class="address-label">Shipping Address:</div>
+                <div class="address-details">
+                    <div class="address-line"><%= obj.houseName %>, <%= obj.streetName %></div>
+                    <div class="address-line"><%= obj.city %>, <%= obj.pincode %></div>
+                    <div class="address-line"><%= obj.district %>, <%= obj.state %></div>
+                </div>
+            </div>
         </div>
 
         <div class="products">
             <% product.forEach((data, index) => { %>
-                <div class="product" style="height: 150px;width: 150px;">
-                    <img src="/images/products/<%= data.image %>" alt="<%= data.name %>">
-                    <div class="product-info">
-                        <p><%= data.name %></p>
-                        <p>Price: ₹ <%= data.price %></p>
-                        <p>Quantity: <%= data.quantity %></p>
+                <div class="product">
+                    <div class="product-details">
+                        <img src="/images/products/<%= data.image %>" alt="<%= data.name %>">
+                        <div class="product-info">
+                            <p><%= data.name %></p>
+                            <p>Price: ₹ <%= data.price %></p>
+                            <p>Quantity: <%= data.quantity %></p>
+                        </div>
                     </div>
                 </div>
             <% }); %>
@@ -266,7 +227,7 @@
                 <p>Placed</p>
             </div>
             <div>
-                <div class="circle <%= obj.orderStatus === 'Shipped' ? 'active' : '' %>|| <%= obj.orderStatus === 'Out for Delivery' ? 'active' : '' %>""></div>
+                <div class="circle <%= obj.orderStatus === 'Shipped' || obj.orderStatus === 'Out for Delivery' ? 'active' : '' %>"></div>
                 <p>Shipped</p>
             </div>
             <div>
@@ -284,30 +245,16 @@
             Total Amount: ₹ <%= obj.totalAmount %>
         </div>
 
-        <% if (obj.orderStatus === 'Placed'||obj.orderStatus === 'Shipped') { %>
+        <% if (obj.orderStatus === 'Placed' || obj.orderStatus === 'Shipped') { %>
             <button class="cancel-btn" onclick="confirmCancellation('<%= obj._id %>')">Cancel Order</button>
         <% } %>
         <input type="hidden" id="statusInput" value="<%= obj.orderStatus %>" />
 
-        <% if(obj.orderStatus==="Delivered") { %>
-            <div class="ml-auto align-self-end">
-                <div>
-                    <% var hasReview = false; %>
-                    <% review.forEach(function(reviewItem) { %>
-                    <% if (reviewItem.productId.equals(obj.product._id)) { %>
-                    <% hasReview = true; %>
-                    <% } %>
-                    <% }); %>
-    
-                    <% if (hasReview) { %>
-                    <button type="button" class="review-btn btn btn-success btn-sm mt-2" data-toggle="modal"
-                        data-target="#editreviewModal" onclick="editreview('<%= obj.product._id %>','<%= obj._id %>')">Edit Review</button>
-                       <% } else { %>
-                         <button type="button" class="btn btn-success btn-sm mt-2" data-toggle="modal" onclick="getProductId('<%= obj.product._id %>','<%= obj._id %>')" data-target="#reviewModal">Leave a Review</button>
-                       <% } %>
-                       <% } %>
-    </div>
-    
+        
+        </div>
+
+       
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script src="/user/js/orderHistory.js"></script>
 </body>

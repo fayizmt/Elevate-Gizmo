@@ -6,15 +6,15 @@
 <!-- End Header Section -->
 
 <!-- Start Breadcrumbs Section -->
-<section class="breadcrumbs-section background_bg" data-img-src="image/checkout-breadcrumbs-img.jpg">
+<!-- <section class="breadcrumbs-section background_bg" data-img-src="image/checkout-breadcrumbs-img.jpg"> -->
 	<div class="container">
     	<div class="row justify-content-center">
         	<div class="col-md-12">
                 <div class="page_title text-center">
                 	<h1>Checkout</h1>
                     <ul class="breadcrumb justify-content-center">
-                    	<li><a href="index.html">home</a></li>
-                        <li><a href="#">shop</a></li>
+                    	<li><a href="home">home</a></li>
+                        <li><a href="shop">shop</a></li>
                         <li><span>Checkout</span></li>
                     </ul>
                 </div>
@@ -58,47 +58,47 @@
                                     	<div class="check-tab">
                                             <div class="checkout-form">
                                                 <div class="row">
-                                                    <div class="form-group col-md-6">
-                                                        <label>Name <span class="required_sign">*</span></label>
-                                                        <input class="form-control required" placeholder="Enter Your Name" value="Muhammed" type="text" name="name">
+                                                  <div class="form-group col-md-6">
+                                                    <label>Name <span class="required_sign">*</span></label>
+                                                    <input class="form-control required" placeholder="Enter Your Name" value="<%= profileData ? profileData.name : '' %>" type="text" name="name">
+                                                  </div>
+                                                  <div class="form-group col-md-6">
+                                                    <label>Street Name <span class="required_sign">*</span></label>
+                                                    <input class="form-control required" placeholder="Enter Your Street Name" value="<%= profileData ? profileData.streetName : '' %>" type="text" name="streetName">
+                                                  </div>
+                                                  <div class="form-group col-md-6">
+                                                    <label>House Name <span class="required_sign">*</span></label>
+                                                    <input class="form-control required" placeholder="Enter Your House Name" value="<%= profileData ? profileData.houseName : '' %>" type="text" name="houseName">
+                                                  </div>
+                                                  <div class="form-group col-md-6">
+                                                    <label>Phone Number <span class="required_sign">*</span></label>
+                                                    <input class="form-control required" placeholder="Enter Your Phone Number" value="<%= profileData ? profileData.mobile : '' %>" type="tel" name="mobile">
+                                                  </div>
+                                                  <div class="form-group col-md-6">
+                                                    <label>Email <span class="required_sign">*</span></label>
+                                                    <input class="form-control required" placeholder="Enter Your Email" value="<%= profileData ? profileData.email : '' %>" type="email" name="email">
+                                                  </div>
+                                                  <!-- <div class="form-group col-md-6">
+                                                    <label>City <span class="required_sign">*</span></label>
+                                                    <input class="form-control required" placeholder="Enter Your District" value="<%= profileData ? profileData.city : '' %>" type="text" name="city">
+                                                  </div> -->
+                                                  <div class="form-group col-md-6">
+                                                    <label>District <span class="required_sign">*</span></label>
+                                                    <input class="form-control required" placeholder="Enter Your District" value="<%= profileData ? profileData.district : '' %>" type="text" name="district">
+                                                  </div>
+                                                  <div class="form-group col-md-6">
+                                                    <label>State <span class="required_sign">*</span></label>
+                                                    <input class="form-control required" placeholder="Enter Your State" value="<%= profileData ? profileData.state : '' %>" type="text" name="state">
+                                                  </div>
+                                                  <div class="form-group col-md-6">
+                                                    <label>Pincode <span class="required_sign">*</span></label>
+                                                    <input class="form-control required" placeholder="Enter Your Pincode" value="<%= profileData ? profileData.pincode : '' %>" type="text" name="pincode">
+                                                  </div>
+                                                  <div class="form-group col-md-12">
+                                                    <div class="form-wizard-buttons text-md-right">
+                                                      <button class="btn btn-primary btn-submit btn-next" type="button" onclick="showPaymentMethod()">Continue</button>
                                                     </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label>Street Name <span class="required_sign">*</span></label>
-                                                        <input class="form-control required" placeholder="Enter Your Street Name" value="Areekulam" type="text" name="streetName">
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label>House Name <span class="required_sign">*</span></label>
-                                                        <input class="form-control required" placeholder="Enter Your House Name" value="Manayam Thodi" type="text" name="houseName">
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label>Phone Number <span class="required_sign">*</span></label>
-                                                        <input class="form-control required" placeholder="Enter Your Phone Number" value="7012144021" type="tel" name="mobile">
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label>Email <span class="required_sign">*</span></label>
-                                                        <input class="form-control required" placeholder="Enter Your Email" value="fayizmt369@gmail.com" type="email" name="email">
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label>City <span class="required_sign">*</span></label>
-                                                        <input class="form-control required" placeholder="Enter Your District" value="Vengera" type="text" name="city">
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label>District <span class="required_sign">*</span></label>
-                                                        <input class="form-control required" placeholder="Enter Your District" value="Malappuram" type="text" name="district">
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label>State <span class="required_sign">*</span></label>
-                                                        <input class="form-control required" placeholder="Enter Your State" value="Kerala" type="text" name="state">
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label>Pincode <span class="required_sign">*</span></label>
-                                                        <input class="form-control required" placeholder="Enter Your Pincode" value="676304" type="text" name="pincode">
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                        <div class="form-wizard-buttons text-md-right">
-                                                            <button class="btn btn-primary btn-submit btn-next" type="button" onclick="showPaymentMethod()">Continue</button>
-                                                        </div>
-                                                    </div>
+                                                  </div>
                                                 </div>
                                                 
                                             </div>

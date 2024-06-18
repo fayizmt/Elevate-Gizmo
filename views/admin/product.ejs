@@ -119,39 +119,32 @@
                                         </thead>
                                         <tbody>
                                             <% for(let i = 0; i < productList.length; i++) { %>
-
-                                                    <tr>
-                                                        <td align="center">
-                                                            <%=i+1 %>
-                                                        </td>
-                                                        <td align="center">
-                                                            <img src="/images/products/<%= productList[i].images[0] %>" style="max-width: 30px; max-height: 30px;" alt="">
-                                                        </td>
-                                                        <td align="center">
-                                                            <%=productList[i].productName%>
-                                                        </td>
-                                                        <td align="center">
-                                                            <%=productList[i].quantity%>
-                                                        </td>
-                                                        <td align="center">
-                                                            <%=productList[i].category.category%>%>
-                                                        </td>
-                                                        <td align="center">
-                                                            <%=productList[i].price%>
-                                                        </td>
-                                                        <td align="center">
-                                                           
-                                                            <a href="/admin/editproduct?id=<%= productList[i]._id %>">edit</a>
-                                                        </td>
-                                                        <td align="center">
-                                                           
-                                                                <a class="unblock-user" data-user-id><span
-                                                                        class="badge rounded-pill alert-success">unblock</span></a>
-                                                              
-                                                        </td>
-                                                    </tr>
-                                             <% } %>
+                                                <tr>
+                                                    <td align="center"><%= i + 1 %></td>
+                                                    <td align="center">
+                                                        <img src="/images/products/<%= productList[i].images[0] %>" style="max-width: 30px; max-height: 30px;" alt="">
+                                                    </td>
+                                                    <td align="center"><%= productList[i].productName %></td>
+                                                    <td align="center"><%= productList[i].quantity %></td>
+                                                    <td align="center"><%= productList[i].category.category %></td>
+                                                    <td align="center"><%= productList[i].price %></td>
+                                                    <td align="center"><a href="/admin/editproduct?id=<%= productList[i]._id %>">edit</a></td>
+                                                    <td align="center">
+                                                        <% if (productList[i].is_block) { %>
+                                                            <a class="block-unblock-product" data-product-id="<%= productList[i]._id %>" data-action="unblock">
+                                                                <span class="badge rounded-pill alert-success">unblock</span>
+                                                            </a>
+                                                        <% } else { %>
+                                                            <a class="block-unblock-product" data-product-id="<%= productList[i]._id %>" data-action="block">
+                                                                <span class="badge rounded-pill alert-danger">block</span>
+                                                            </a>
+                                                        <% } %>
+                                                    </td>
+                                                </tr>
+                                            <% } %>
                                         </tbody>
+                                        
+                                        
                                     </table>
                                     
                                 </div>
@@ -162,6 +155,45 @@
                 </div>
             </div>
         </section>
+
+        
+            <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const blockUnblockLinks = document.querySelectorAll('.block-unblock-product');
+
+        blockUnblockLinks.forEach(link => {
+            link.addEventListener('click', async (event) => {
+                event.preventDefault();
+
+                const productId = event.currentTarget.getAttribute('data-product-id');
+                const action = event.currentTarget.getAttribute('data-action');
+
+                try {
+                    const response = await fetch('/admin/product', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ productId, action })
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        location.reload();
+                    } else {
+                        alert('Failed to update product status');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Failed to update product status');
+                }
+            });
+        });
+    });
+</script>
+
+        
+        
 
         <!-- content-main end// -->
         <%-include ('../layouts/adminFooter.ejs') %>

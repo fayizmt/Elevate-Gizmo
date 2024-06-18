@@ -51,16 +51,19 @@ adminRoute.post('/addcategory',imageUploader.uploadCategory.single("imagepath"),
 //edit Category
 adminRoute.get('/editcategory',categoryController.loadEditCategory)
 adminRoute.post('/editcategory',imageUploader.uploadCategory.single("imagepath"),categoryController.updateCategory)
+//block/unblock
+adminRoute.post('/category/toggle-block/:id', categoryController.categoryStatus)
+
 
 //product
 adminRoute.get('/product',auth.isLogin,productController.loadProduct)
 //add Product
 adminRoute.get('/addproduct',auth.isLogin,productController.loadAddProduct)
-adminRoute.post('/addproduct', imageUploader.uploadProduct.array("imagepath", 15),
+adminRoute.post('/addproduct', imageUploader.uploadProduct.array("imagepath", 5),
 imageUploader.productImgResize,productController.addProduct)
 // edit Product
 adminRoute.get('/editproduct',auth.isLogin,productController.loadEditProduct)
-adminRoute.post('/editproduct', imageUploader.uploadProduct.array("images", 15),
+adminRoute.post('/editproduct', imageUploader.uploadProduct.array("images", 5),
 imageUploader.productImgResize,productController.updateProduct);
 
 adminRoute.delete("/removeImage", productController.removeImage);
@@ -69,6 +72,9 @@ adminRoute.patch(
   "/uploadImage/:productId",
   imageUploader.uploadProduct.array("images"),imageUploader.productImgResize,
   productController.uploadImage);
+//block/unblock
+adminRoute.post('/product',productController.productStatus)
+
 
 // Banner
 adminRoute.get('/banner',auth.isLogin,bannerController.loadBanner)

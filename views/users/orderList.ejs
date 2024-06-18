@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ElevateGizmo | Order History</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/user/image/loader_logo.png">
+    <title> Orders</title>
     <style>
         /* Add your CSS styles here */
         body {
@@ -48,26 +49,6 @@
             margin-right: 10px;
         }
 
-        .status {
-            display: flex;
-            align-items: center;
-        }
-
-        .circle {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: #ccc;
-            margin-right: 5px;
-        }
-
-        .stick {
-            width: 2px;
-            height: 15px;
-            background-color: #ccc;
-            margin: 0 7px;
-        }
-
         button {
             background-color: #007bff;
             color: #fff;
@@ -87,49 +68,68 @@
         }
 
         .active {
-            background-color: #70e000; /* Change color for active elements */
+            color: #70e000; /* Change color for active elements */
+            font-weight: bold;
+        }
+
+        .cancelled {
+            color: #f00; /* Red color for Cancelled status */
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Your Order History</h1>
-        <% if(data==null){ %>
-        <p class="else">Your history is clean 😊</p>
-        <% }else{ %> <% data.forEach((data)=>{ %>
-        <div class="card">
-            <div class="part1">
-                <div class="id">#ID: <%= data._id %></div>
-                <div class="time">Purchased on: <%= data.createdAt %></div>
-                <input id="status" type="hidden" value="<%= data.orderStatus %>" />
-            </div>
-            <div class="part2">
-                <div class="img"><img src="" alt="" /></div>
-                <div class="status">
-                    <div class="part3">
-                        <div class="one">
-                            <div class="circle"></div>
-                            <div class="stick"></div>
-                        </div>
-                        <div class="two">
-                            <div class="circle"></div>
-                            <div class="stick"></div>
-                        </div>
-                        <div class="three">
-                            <div class="circle"></div>
-                        </div>
-                    </div>
-                    <div class="part4">
-                        <p id="p1">Placed</p>
-                        <p id="p2">Shipped</p>
-                        <p id="p3">Delivered</p>
-                    </div>
+        <select id="statusFilter">
+            <option value="all">All Orders</option>
+            <option value="Placed">Placed</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Out for Delivery">Out for Delivery</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+        </select>
+        <div id="orderHistory">
+            <% if(data==null || data.length === 0) { %>
+            <p class="else">Your history is empty</p>
+            <% } else { %> <% data.forEach((data)=> { %>
+            <div class="card" data-status="<%= data.orderStatus %>">
+                <div class="part1">
+                    <div class="id">#ID: <%= data._id %></div>
+                    <div class="time">Purchased on: <%= data.createdAt %></div>
+                    <input type="hidden" class="orderStatus" value="<%= data.orderStatus %>" />
                 </div>
-                <button onclick="window.location.href='/orderHistory/<%= data._id %>'">Details</button>
+                <div class="part2">
+                    <div class="img"><img src="" alt="" /></div>
+                    <div class="status">
+                        <div class="part4">
+                            <p class="<%= data.orderStatus === 'Placed' ? 'active' : '' %>">Placed</p>
+                            <p class="<%= data.orderStatus === 'Shipped' ? 'active' : '' %>">Shipped</p>
+                            <p class="<%= data.orderStatus === 'Out for Delivery' ? 'active' : '' %>">Out for Delivery</p>
+                            <p class="<%= data.orderStatus === 'Delivered' ? 'active' : '' %>">Delivered</p>
+                            <p class="<%= data.orderStatus === 'Cancelled' ? 'cancelled' : '' %>">Cancelled</p>
+                        </div>
+                    </div>
+                    <button onclick="window.location.href='/orderHistory/<%= data._id %>'">Details</button>
+                </div>
             </div>
+            <% }) %> <% } %>
         </div>
-        <% }) %> <%}%>
     </div>
-    <script src="/user/js/orderList.js"></script>
+    <script>
+        document.getElementById('statusFilter').addEventListener('change', function () {
+            let selectedStatus = this.value;
+            let orderCards = document.querySelectorAll('.card');
+
+            orderCards.forEach(card => {
+                let cardStatus = card.getAttribute('data-status');
+                if (selectedStatus === 'all' || cardStatus === selectedStatus) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

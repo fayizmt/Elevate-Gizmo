@@ -97,12 +97,12 @@
                                             <input type="text" class="form-control" name="color" value="<%= product.color %>" required>
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label">Price</label>
+                                            <label class="form-label">Offer Price</label>
                                             <input type="number" class="form-control" name="price" id="price" value="<%= product.price %>" required>
                                             <div id="priceError" class="error-message text-danger"></div>
                                         </div> 
                                         <div class="form-group">
-                                          <label class="form-label">Actual Price</label>
+                                          <label class="form-label">Price</label>
                                           <input type="number" class="form-control" name="actualPrice" id="actualPrice" value="<%= product.actualPrice %>" required>
                                           <div id="priceError" class="error-message text-danger"></div>
                                       </div>
@@ -264,7 +264,7 @@
                window.location.reload();
                // Optionally, scroll down after refreshing
                window.scrollTo(0, document.body.scrollHeight);
-             }, 3000); // 1000 milliseconds = 1 second
+             }, 1000); // 1000 milliseconds = 1 second
            } else {
              // Handle other cases as needed
            }

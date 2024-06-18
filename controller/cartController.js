@@ -46,7 +46,18 @@ const loadCart = async (req,res) => {
                   },
                 },
               ]);
-              Total = total[0].total;
+              let Total = total[0].total;
+              let couponCode = "";
+              
+              const coupon = await couponDb.findOne({ criteriaAmount: { $lt: Total } });
+              
+              if (coupon) {
+                  couponCode = coupon.couponCode;
+                  console.log(couponCode);
+              } else {
+                  console.log("No valid coupon found.");
+              }
+              
     
               console.log(total);
             //   console.log(userId);
@@ -57,6 +68,7 @@ const loadCart = async (req,res) => {
                 userId: userId,
                 total: Total,
                 category: categoryData,
+                coupon: couponCode
               });
               console.log("case1");
             } else {
@@ -102,13 +114,11 @@ const loadCart = async (req,res) => {
             const productId = req.params.id;
             const userId = req.session.user_id;
 
-            // Check if the user exists
             const userData = await userDb.findById(userId);
             if (!userData) {
                 return res.status(404).json({ error: "User not found" });
             }
 
-            // Check if the product exists
             const productData = await productDb.findById(productId);
             if (!productData) {
                 return res.status(404).json({ error: "Product not found" });
@@ -146,7 +156,6 @@ const loadCart = async (req,res) => {
                     totalPrice: productPrice,
                 });
 
-                // Save the new cart
                 userCart = await userCart.save();
             }
 
@@ -263,8 +272,8 @@ const loadCart = async (req,res) => {
 
     const checkCoupon = async (req, res) => {
       try {
-          const userId = req.session.user_id; // Make sure user_id is properly set in the session
-          const couponCode = req.body.couponCode; // Correct variable name to match client-side code
+          const userId = req.session.user_id; 
+          const couponCode = req.body.couponCode; 
           const currentDate = new Date();
   
           const cartData = await cartDb.findOne({ userId: userId });
@@ -293,7 +302,7 @@ const loadCart = async (req,res) => {
           }
       } catch (error) {
           console.error('Error applying coupon:', error);
-          res.status(500).json({ error: 'Internal server error' }); // Example of enhanced error handling
+          res.status(500).json({ error: 'Internal server error' });
       }
   };
   

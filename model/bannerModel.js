@@ -22,7 +22,7 @@ const bannerSchema = new mongoose.Schema(
     // },
     is_block: {
       type: Boolean,
-      default: 1,
+      default: 0,
     },
     createdAt: {
       type: Date,

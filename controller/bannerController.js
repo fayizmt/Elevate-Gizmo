@@ -101,12 +101,30 @@ const updateBanner = async (req,res) => {
       }
     }
 
-
+    const removeBanner = async (req, res) => {
+        try {
+            const bannerId = req.query.id;
+            console.log(bannerId);
+            // Assuming you have a Banner model defined using Mongoose
+            const deleteBanner = await bannerModel.deleteOne({ _id: bannerId });
+    
+            if (!deleteBanner) {
+                return res.status(404).json({ success: false, message: 'Banner not found' });
+            }
+    
+            res.status(200).json({ success: true, message: 'Banner removed successfully', data: deleteBanner });
+        } catch (error) {
+            console.log(error.message);
+            res.status(500).json({ success: false, message: 'Internal server error' });
+        }
+    };
+    
 
 module.exports = {
     loadBanner,
     addBannerLoad,
     addBanner,
     editBannerLoad,
-    updateBanner
+    updateBanner,
+    removeBanner
 }

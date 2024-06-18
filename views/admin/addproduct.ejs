@@ -1,4 +1,60 @@
 <%-include ('../layouts/adminHeader.ejs') %>
+
+<style>
+    .image-preview-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px; /* Add some spacing between previews */
+        max-width: 100%; /* Set maximum width to ensure responsiveness */
+         
+    }
+  
+    .image-preview {
+        width: 100%; /* Occupy full width of the container */
+        max-width: 150px; /* Set a maximum width */
+        height: 150px; /* Allow the height to adjust accordingly */
+        position: relative;
+    }
+  
+    .image-preview img {
+        width: 100%; /* Ensure the image takes the full width */
+        height: 100%; /* Ensure the image takes the full height */
+        object-fit: cover;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  
+    .image-input {
+      flex: 1;
+      /* Optional: Center align text */
+      position: relative;
+    }
+  
+    .image-preview.plus-sign {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .image-preview img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+    }
+  
+    /* Media query for smaller screens */
+    @media screen and (max-width: 600px) {
+      .image-preview {
+        max-width: calc(50% - 10px); /* Adjust as needed for smaller screens */
+      }
+    }
+  </style>
+<body>
+     
         <div class="screen-overlay"></div>
        
             <%-include ('../layouts/adminSideBar.ejs') %>
@@ -86,12 +142,12 @@
                                           <input type="text" class="form-control" id="color" name="color" value="" required>
                                         </div>
                                         <div class="form-group">
-                                          <label for="price" class="form-label">Price</label>
+                                          <label for="price" class="form-label">Offer Price</label>
                                           <input type="number" class="form-control" id="price" name="price" value="" required>
                                           <div id="priceError" class="error-message text-danger"></div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="Actual price" class="form-label">Actual Price</label>
+                                            <label for="Actual price" class="form-label">Price</label>
                                             <input type="number" class="form-control" id="actualPrice" name="actualPrice" value="" required>
                                             <div id="priceError" class="error-message text-danger"></div>
                                           </div>
@@ -112,10 +168,23 @@
                             <input type="number" class="form-control" id="quantity" name="quantity" value="" required>
                             <div id="quantityError" class="error-message text-danger"></div>
                           </div>
-                          <div class="form-group">
-                            <label for="image">Add image</label><br>
-                            <input class="form-control" type="file" id="image" name="imagepath" accept="image/*"multiple data-max_length="20"><br>
+                          <div class="form-group picContainer">
+                            <div class="image-input" onclick="handleImageClick(event, 1)">
+                                <label for="coverPic1">Cover Pic</label>
+                                <div id="preview1" class="image-preview plus-sign"><img src="https://static.vecteezy.com/system/resources/previews/009/266/327/original/plus-sign-icon-free-png.png" alt=""></div>
+                                <input type="file" name="images" id="coverPic1" accept="image/*" style="display: none;" onchange="previewImage(this, 'preview1')">
+                            </div>
+                        
+                            <!-- Repeat the following block for each additional input -->
+                            <!-- You can set the maximum number of inputs (e.g., 10) based on your requirement -->
+                            <div class="image-input" id="imageInput2" onclick="handleImageClick(event, 2)">
+                                <label for="coverPic2">Product Image 1</label>
+                                <div id="preview2" class="image-preview plus-sign"><img src="https://static.vecteezy.com/system/resources/previews/009/266/327/original/plus-sign-icon-free-png.png" alt=""></div>
+                                <input type="file" name="images" id="coverPic2" accept="image/*" style="display: none;" onchange="previewImage(this, 'preview2')">
+                                <button type="button" class="btn btn-danger m-3 btn-sm" onclick="removeInput(2)">Remove</button>
+                            </div>
                         </div>
+                       
                           
                       
                          
@@ -132,5 +201,72 @@
                     </div>
                 </div>
             </section>
+
+            <script>
+let currentIndex = 2; // Start with the index of the last existing input
+
+function handleImageClick(event, index) {
+    const coverPicInput = document.getElementById(`coverPic${index}`);
+    coverPicInput.click();
+}
+
+function previewImage(input, previewId) {
+    const previewContainer = document.getElementById(previewId);
+    if (previewContainer) {
+        previewContainer.innerHTML = ''; // Clear previous preview
+
+        const file = input.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const image = document.createElement('img');
+                image.src = e.target.result;
+                image.classList.add('img-fluid');
+
+                previewContainer.appendChild(image);
+                previewContainer.classList.remove('plus-sign');
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Check if the current index is less than or equal to the maximum index (e.g., 10)
+    if (currentIndex <= 10) {
+        currentIndex++;
+        addNewInput();
+    }
+}
+
+function addNewInput() {
+    const formGroup = document.querySelector('.picContainer');
+
+    const newIndex = currentIndex;
+    const newInput = document.createElement('div');
+    newInput.classList.add('image-input');
+    newInput.setAttribute('id', `imageInput${newIndex}`);
+    newInput.setAttribute('onclick', `handleImageClick(event, ${newIndex})`);
+
+    newInput.innerHTML = `
+        <label for="coverPic${newIndex}">Product Image ${newIndex - 1}</label>
+        <div id="preview${newIndex}" class="image-preview plus-sign"><img src="https://static.vecteezy.com/system/resources/previews/009/266/327/original/plus-sign-icon-free-png.png" alt=""></div>
+        <input type="file" name="images" id="coverPic${newIndex}" accept="image/*" style="display: none;" onchange="previewImage(this, 'preview${newIndex}')">
+        <button type="button" class="btn btn-danger m-3 btn-sm" onclick="removeInput(${newIndex})">Remove</button>
+    `;
+
+    formGroup.appendChild(newInput);
+}
+
+function removeInput(index) {
+    const formGroup = document.querySelector('.picContainer');
+    const inputToRemove = document.getElementById(`imageInput${index}`);
+    formGroup.removeChild(inputToRemove);
+}
+
+document.getElementById('addButton').addEventListener('click', addNewInput);
+
+
+              </script>
             
 <%-include ('../layouts/adminFooter.ejs') %>

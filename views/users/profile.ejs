@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Profile</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/user/image/loader_logo.png">
+  <title>Profile</title>
   <style>
     /* Resetting default margin and padding */
     * {
@@ -112,7 +113,6 @@
       margin-bottom: 10px;
     }
 
-    /* Adding read-only style */
     .readonly {
       background-color: #f4f4f4;
       cursor: not-allowed;
@@ -141,7 +141,6 @@
 <body>
   <div class="container">
     <div class="image">
-      <img src="/images/userProfile/<%=proData.image %>" alt="Profile Image" />
       <button onclick="window.location.href='/editprofile'">Edit Profile</button>
     </div>
     <div class="mainpart">
@@ -150,13 +149,12 @@
         <input type="text" value="<%= userData.name %>" readonly /> 
         <label for="email">Email</label>
         <input type="text" value="<%= userData.email %>" readonly />
-        <!-- Add more fields as needed -->
       </div>
       <div class="part">
         <label for="mobile">Mobile Number</label>
         <input type="text" value="<%= userData.mobile %>" readonly />
         <label for="dob">DOB</label>
-        <input type="text" value="<%= proData.dob %>" readonly /> 
+        <input type="text" value="<%= proData ? proData.dob : '' %>" readonly /> 
       </div>
       
       <div class="part3">
@@ -164,23 +162,23 @@
         <div class="part3Head">
           <div class="part3one">
             <label for="houseName">House Name</label>
-            <input type="text" value="<%= proData.houseName %>" readonly /> 
+            <input type="text" value="<%= proData ? proData.houseName : '' %>" readonly /> 
 
             <label for="streetName">Street Name</label>
-            <input type="text" value="<%=proData.streetName %>" readonly />
+            <input type="text" value="<%= proData ? proData.streetName : '' %>" readonly />
 
             <label for="post">Post</label>
-            <input type="text" value="<%= proData.post %>" readonly /> 
+            <input type="text" value="<%= proData ? proData.post : '' %>" readonly /> 
           </div>
           <div class="part3two">
             <label for="pincode">Pincode</label>
-            <input type="text" value="<%= proData.pincode %>" readonly /> 
+            <input type="text" value="<%= proData ? proData.pincode : '' %>" readonly /> 
 
             <label for="district">District</label>
-            <input type="text" value="<%= proData.district %>" readonly />
+            <input type="text" value="<%= proData ? proData.district : '' %>" readonly />
 
             <label for="state">State</label>
-            <input type="text" value="<%=proData.state %>" readonly /> 
+            <input type="text" value="<%= proData ? proData.state : '' %>" readonly /> 
           </div>
         </div>
       </div>

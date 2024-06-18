@@ -38,7 +38,7 @@ const productSchema = new mongoose.Schema(
     
     is_block: {
       type: Boolean,
-      default: 0,
+      default: false,
     },
     
   },
