@@ -5,6 +5,7 @@ const session = require('express-session')
 const config = require('../config/config')
 const auth = require('../middileware/auth');
 const imageUploader = require("../config/multer");
+const commonController = require("../controller/commonController")
 const userController = require("../controller/userController");
 const userprofileController = require("../controller/userProfileController")
 const wishlistController = require("../controller/wishlistController");
@@ -22,21 +23,21 @@ userRoute.use(express.static("public"));
 
 
 // Registration
-userRoute.get("/registration",auth.isLogout, userController.loadRegistration);
-userRoute.post("/registration", userController.insertUser);
+userRoute.get("/registration",auth.isLogout,commonController.loadRegistration);
+userRoute.post("/registration", commonController.insertUser);
 
 //otp Verification
-userRoute.get("/otpVerification",userController.loadVerifyOtp)
-userRoute.post("/otpVerification",userController.verifyOtp)
+userRoute.get("/otpVerification",commonController.loadVerifyOtp)
+userRoute.post("/otpVerification",commonController.verifyOtp)
 
 //forget Password
-userRoute.get("/forget",userController.forgetLoad)
-userRoute.post("/forget",userController.forgetVerify)
+userRoute.get("/forget",commonController.forgetLoad)
+userRoute.post("/forget",commonController.forgetVerify)
 
 // Login Routes
-userRoute.get("/", userController.home);
-userRoute.get("/login", userController.loginLoad);
-userRoute.post("/login", userController.verifyLogin);
+userRoute.get("/", commonController.home);
+userRoute.get("/login", commonController.loginLoad);
+userRoute.post("/login", commonController.verifyLogin);
 
 //Home
 userRoute.get("/home",auth.isLogin,userController.loadHome);
@@ -95,15 +96,15 @@ userRoute.get('/editReview',reviewController.editReviewGet)
 userRoute.post('/submit-editreview',reviewController.updateReview)
 
 // Logout
-userRoute.get("/logout",auth.isLogin,userController.userLogout);
+userRoute.get("/logout",auth.isLogin,commonController.userLogout);
 
 //forget password
-userRoute.get("/forget",auth.isLogout, userController.forgetLoad);
-userRoute.post("/forget", userController.forgetVerify);
+userRoute.get("/forget",auth.isLogout, commonController.forgetLoad);
+userRoute.post("/forget", commonController.forgetVerify);
 
 //reset password
-userRoute.get("/forget-password",auth.isLogout, userController.forgetPasswordLoad);
-userRoute.post("/forget-password", userController.resetPassword);
+userRoute.get("/forget-password",auth.isLogout, commonController.forgetPasswordLoad);
+userRoute.post("/forget-password", commonController.resetPassword);
 
 // userRoute.post("/login", userController.verifyLogin);
 // userRoute.get("/logout",  auth.isLogin,auth.checkBlock, userController.userLogout);
